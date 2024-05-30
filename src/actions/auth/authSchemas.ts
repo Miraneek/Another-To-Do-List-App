@@ -1,7 +1,7 @@
 import {z} from "zod";
 
 export const registerSchema = z.object({
-    username: z.string().min(3).max(10),
+    username: z.string().min(3),
     password: z.string().min(8),
     email: z
         .string()
@@ -11,8 +11,3 @@ export const registerSchema = z.object({
             return emails.includes(e);
         }, "This email is not in our database")*/
 });
-
-export const loginSchema = z.object({
-    email: z.string(),
-    password: z.string().min(8),
-})

@@ -1,8 +1,7 @@
 "use client"
-import React, {useEffect, useState} from 'react';
-import { loginUserAction } from "@/actions/auth/loginAction";
-import { useAction } from "next-safe-action/hooks";
-import {auth} from "@/lib/firebase";
+import React, {useState} from 'react';
+import {signInWithEmailAndPassword} from "firebase/auth";
+import {authCorrect} from "@/lib/fireBase/firebase";
 
 export function LoginForm() {
     const [email, setEmail] = useState('');
@@ -13,17 +12,6 @@ export function LoginForm() {
         mainError: '',
     });
     const [isSubmitting, setIsSubmitting] = useState(false);
-
-    const {execute} = useAction(loginUserAction, {
-        onSuccess: () => {
-            setIsSubmitting(false)
-            setErrors({ ...errors, mainError: ''});
-        },
-        onError: (error) => {
-            console.log(error)
-            setIsSubmitting(false)
-        },
-    });
 
     const validateEmail = (email: string) => {
         const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -47,7 +35,7 @@ export function LoginForm() {
             default:
                 break;
         }
-        setErrors({ ...errors, [field]: error });
+        setErrors({...errors, [field]: error});
     };
 
     const validateForm = () => {
@@ -63,15 +51,22 @@ export function LoginForm() {
         return !emailError && !passwordError;
     };
 
-    const handleSubmit = (event: React.FormEvent) => {
+    const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
         setErrors({...errors, mainError: ''});
         setIsSubmitting(true);
         if (validateForm()) {
-            execute({ email, password });
-        } else {
-            setIsSubmitting(false);
+            await signInWithEmailAndPassword(authCorrect, email, password)
+                .then((userCredential) => {
+                    const user = userCredential.user;
+                })
+                .catch((error) => {
+                    console.log(error)
+                });
+            console.log(authCorrect.currentUser)
         }
+        setIsSubmitting(false)
+
     };
 
     return (
@@ -102,7 +97,10 @@ export function LoginForm() {
                     />
                     {errors.password && <p className="text-red-500 text-sm">{errors.password}</p>}
                 </div>
-                <button type={"submit"} className={"disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-blue-500 w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"} disabled={isSubmitting}>Login</button>
+                <button type={"submit"}
+                        className={"disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-blue-500 w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"}
+                        disabled={isSubmitting}>Login
+                </button>
                 {errors.mainError && <p className="text-red-500 text-lg">{errors.mainError}</p>}
             </form>
         </div>

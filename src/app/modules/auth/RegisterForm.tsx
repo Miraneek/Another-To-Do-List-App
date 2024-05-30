@@ -2,6 +2,8 @@
 import React, {useState} from 'react';
 import {registerUserAction} from "@/actions/auth/registerAction";
 import {useAction} from "next-safe-action/hooks";
+import {authCorrect} from "@/lib/fireBase/firebase";
+import {signInWithEmailAndPassword} from "firebase/auth";
 
 export function RegisterFrom() {
     const [email, setEmail] = useState('');
@@ -18,10 +20,12 @@ export function RegisterFrom() {
     const [isSubmitting, setIsSubmitting] = useState(false);
 
     const {execute} = useAction(registerUserAction, {
-        onSuccess: (data) => {
+        onSuccess: (data, user) => {
             setIsSubmitting(false)
             if (data.failure){
                 setErrors({ ...errors, mainError: data.failure });
+            } else if (data.success) {
+                signInWithEmailAndPassword(authCorrect, user.email, user.password)
             }
         },
         onError: (error) => {
@@ -138,7 +142,8 @@ export function RegisterFrom() {
                     />
                     {errors.confirmPassword && <p className="text-red-500 text-sm">{errors.confirmPassword}</p>}
                 </div>
-                <button type="submit" className="w-full bg-blue-500 text-white py-2 rounded disabled:opacity-50"
+                <button type={"submit"}
+                        className={"disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-blue-500 w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"}
                         disabled={isSubmitting}>Register
                 </button>
                 {errors.mainError && <p className="text-red-500 text-lg">{errors.mainError}</p>}

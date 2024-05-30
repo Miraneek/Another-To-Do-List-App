@@ -1,23 +1,39 @@
 "use server";
-import { action } from "@/lib/safe-action";
-import { registerSchema } from "@/actions/auth/authSchemas";
-import { auth } from "@/lib/firebase";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import {action} from "@/lib/safe-action";
+import {registerSchema} from "@/actions/auth/authSchemas";
 
-export const registerUserAction = action(registerSchema, async ({ username, password, email }) => {
+import {
+    createUserWithEmailAndPassword,
+    sendEmailVerification,
+    updateProfile
+} from "firebase/auth";
+import {authCorrect} from "@/lib/fireBase/firebase";
+
+export const registerUserAction = action(registerSchema, async ({username, password, email}) => {
 
     try {
-        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        const userCredential = await createUserWithEmailAndPassword(authCorrect, email, password);
         const user = userCredential.user;
 
-        console.log("Registered user: " + username + " " + email);
+        /*await sendEmailVerification(user);*/
 
-        return { success: "User registered successfully" };
+        await updateProfile(user, {
+            displayName: username
+        })
+
+        console.log("Registered user: " + username + " " + user.email);
+
+        return {success: "User registered successfully"};
     } catch (error: any) {
-        if (error.code === "auth/email-already-in-use") {
-            return { failure: "Email already in use" };
+        const errorCode = error.code;
+        switch (errorCode) {
+            case "auth/weak-password":
+                return {failure: "The password is too weak."};
+            case "auth/email-already-in-use":
+                return {failure: "This email address is already in use by another account."};
+            case "auth/invalid-email":
+                return {failure: "This email address is invalid."};
         }
-
-        return { failure: error.message };
+        return {failure: error.message};
     }
 });
