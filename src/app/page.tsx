@@ -1,13 +1,15 @@
 "use client"
-import {RegisterFrom} from "@/app/modules/auth/RegisterForm";
-import {LoginForm} from "@/app/modules/auth/LoginForm";
-import {authCorrect} from "@/lib/fireBase/firebase";
+import {useAuth} from "@/modules/auth/AuthContextProvider";
 
 export default function Page() {
 
+    const {user, logOut} = useAuth();
+
+    const handleClick = () => logOut();
+
     return <>
-        <RegisterFrom/>
-        <LoginForm/>
-        {authCorrect.currentUser ? <div>User is logged in as {authCorrect.currentUser.displayName}</div> : <div>User is not logged in</div>}
+
+        <h1 className={"text-3xl font-bold underline"}>Hello {user.displayName}</h1>
+        <button onClick={handleClick}>Log user</button>
     </>
 }

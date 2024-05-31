@@ -1,13 +1,10 @@
 "use server";
 import {action} from "@/lib/safe-action";
-import {registerSchema} from "@/actions/auth/authSchemas";
+import {nothingSchema, registerSchema} from "@/actions/auth/authSchemas";
 
-import {
-    createUserWithEmailAndPassword,
-    sendEmailVerification,
-    updateProfile
-} from "firebase/auth";
+import {createUserWithEmailAndPassword, updateProfile} from "firebase/auth";
 import {authCorrect} from "@/lib/fireBase/firebase";
+import {cookies} from "next/headers";
 
 export const registerUserAction = action(registerSchema, async ({username, password, email}) => {
 
@@ -18,12 +15,12 @@ export const registerUserAction = action(registerSchema, async ({username, passw
         /*await sendEmailVerification(user);*/
 
         await updateProfile(user, {
-            displayName: username
+            displayName: username,
         })
 
         console.log("Registered user: " + username + " " + user.email);
 
-        return {success: "User registered successfully"};
+        return {success: {email: email, password: password}};
     } catch (error: any) {
         const errorCode = error.code;
         switch (errorCode) {
@@ -33,7 +30,21 @@ export const registerUserAction = action(registerSchema, async ({username, passw
                 return {failure: "This email address is already in use by another account."};
             case "auth/invalid-email":
                 return {failure: "This email address is invalid."};
+            case "auth/network-request-failed":
+                return {failure: "Network request failed. Please try again."};
         }
         return {failure: error.message};
     }
 });
+
+export const loginAction = action(nothingSchema, async () => {
+    cookies().set("loggedIn", "true");
+    console.log("Logged in")
+    return {success: "User logged in successfully"}
+})
+
+export const logOutAction = action(nothingSchema, async () => {
+    cookies().set("loggedIn", "false");
+    console.log("Logged out")
+    return {success: "User logged in successfully"}
+})

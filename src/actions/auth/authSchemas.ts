@@ -6,8 +6,6 @@ export const registerSchema = z.object({
     email: z
         .string()
         .email("This is not a valid email.")
-        /*.refine(async (e) => {
-            const emails = await fetchEmails();
-            return emails.includes(e);
-        }, "This email is not in our database")*/
 });
+
+export const nothingSchema = z.any();
