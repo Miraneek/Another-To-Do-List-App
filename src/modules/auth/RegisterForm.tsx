@@ -23,8 +23,8 @@ export function RegisterFrom() {
 
     const {execute} = useAction(registerUserAction, {
         onSuccess: async (data) => {
-            setIsSubmitting(false)
             if (data.failure) {
+                setIsSubmitting(false)
                 setErrors({...errors, mainError: data.failure});
             } else if (data.success) {
                 try {

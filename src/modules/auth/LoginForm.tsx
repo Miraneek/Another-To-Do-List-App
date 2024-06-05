@@ -60,6 +60,7 @@ export function LoginForm() {
             try {
                 await logIn(email, password);
             } catch (error: any) {
+                setIsSubmitting(false)
                 console.log(error.code)
                 switch (error.code) {
                     case "auth/user-not-found":
@@ -77,8 +78,6 @@ export function LoginForm() {
                 }
             }
         }
-        setIsSubmitting(false)
-
     };
 
     return (

@@ -2,9 +2,10 @@
 import {action} from "@/lib/safe-action";
 import {nothingSchema, registerSchema} from "@/actions/auth/authSchemas";
 
-import {createUserWithEmailAndPassword, updateProfile} from "firebase/auth";
-import {authCorrect} from "@/lib/fireBase/firebase";
+import {createUserWithEmailAndPassword, updateProfile, sendEmailVerification} from "firebase/auth";
+import {authCorrect, db} from "@/lib/fireBase/firebase";
 import {cookies} from "next/headers";
+import {doc, setDoc} from "@firebase/firestore";
 
 export const registerUserAction = action(registerSchema, async ({username, password, email}) => {
 
@@ -13,6 +14,15 @@ export const registerUserAction = action(registerSchema, async ({username, passw
         const user = userCredential.user;
 
         /*await sendEmailVerification(user);*/
+
+        try {
+            await setDoc(doc(db, "users", user.uid), {
+                username: username,
+            });
+            console.log("Document written with ID: " + user.uid);
+        } catch (e) {
+            console.error("Error adding document: ", e);
+        }
 
         await updateProfile(user, {
             displayName: username,

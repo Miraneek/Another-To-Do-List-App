@@ -1,11 +1,27 @@
 "use client"
 import {useAuth} from "@/modules/auth/AuthContextProvider";
+import {doc, getDoc} from "@firebase/firestore";
+import {db} from "@/lib/fireBase/firebase";
 
 export default function Page() {
 
     const {user, logOut} = useAuth();
 
     const handleClick = () => logOut();
+
+    const handleData = async () => {
+        try {
+            const docRef = doc(db, "users", user.uid);
+            const docSnap = await getDoc(docRef);
+            console.log(docSnap.data())
+        } catch (error) {
+            console.log(error)
+        }
+
+    }
+
+    handleData()
+
 
     return <>
 
