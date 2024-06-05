@@ -98,7 +98,7 @@ export function RegisterFrom() {
 
     return (
         <div>
-            <form onSubmit={handleSubmit} className="bg-white p-8 rounded shadow-md w-96">
+            <form onSubmit={handleSubmit} className="bg-white p-8 rounded shadow-md w-96 text-black">
                 <h2 className="text-2xl mb-4 text-center">Register</h2>
                 <div className="mb-4">
                     <label htmlFor="email" className="block text-gray-700">Email</label>

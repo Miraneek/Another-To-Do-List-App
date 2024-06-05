@@ -232,7 +232,7 @@
   resolved "https://registry.npmjs.org/@firebase/firestore-types/-/firestore-types-3.0.2.tgz"
   integrity sha512-wp1A+t5rI2Qc/2q7r2ZpjUXkRVPtGMd6zCLsiWurjsQpqPgFin3AhNibKcIzoF2rnToNa/XYtyWXuifjOOwDgg==
 
-"@firebase/firestore@4.6.3":
+"@firebase/firestore@^4.6.3", "@firebase/firestore@4.6.3":
   version "4.6.3"
   resolved "https://registry.npmjs.org/@firebase/firestore/-/firestore-4.6.3.tgz"
   integrity sha512-d/+N2iUsiJ/Dc7fApdpdmmTXzwuTCromsdA1lKwYfZtMIOd1fI881NSLwK2wV4I38wkLnvfKJUV6WpU1f3/ONg==

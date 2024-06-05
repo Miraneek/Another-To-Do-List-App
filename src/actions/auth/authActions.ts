@@ -5,7 +5,7 @@ import {nothingSchema, registerSchema} from "@/actions/auth/authSchemas";
 import {createUserWithEmailAndPassword, updateProfile, sendEmailVerification} from "firebase/auth";
 import {authCorrect, db} from "@/lib/fireBase/firebase";
 import {cookies} from "next/headers";
-import {doc, setDoc} from "@firebase/firestore";
+import {collection, doc, setDoc} from "@firebase/firestore";
 
 export const registerUserAction = action(registerSchema, async ({username, password, email}) => {
 
@@ -18,8 +18,23 @@ export const registerUserAction = action(registerSchema, async ({username, passw
         try {
             await setDoc(doc(db, "users", user.uid), {
                 username: username,
+                friends: [],
             });
             console.log("Document written with ID: " + user.uid);
+
+            collection(db, `users/${user.uid}/to-dos`);
+            await setDoc(doc(db, `users/${user.uid}/to-dos`, "Placeholder"), {
+                blank: "blank"
+            })
+            console.log("To-dos collection created with ID: " + user.uid);
+
+
+            collection(db, `users/${user.uid}/habits`);
+            await setDoc(doc(db, `users/${user.uid}/habits`, "Placeholder"), {
+                blank: "blank"
+            })
+            console.log("Habit-tracker collection created with ID: " + user.uid);
+
         } catch (e) {
             console.error("Error adding document: ", e);
         }
