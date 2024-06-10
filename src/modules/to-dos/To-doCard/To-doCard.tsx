@@ -5,7 +5,7 @@ import * as Dialog from '@radix-ui/react-dialog'
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 import {IconCheck, IconDots} from "@tabler/icons-react";
 import {ToDoEdit} from "@/modules/to-dos/To-doEdit";
-import {completeToDo, unCompleteToDo} from "@/utils/to-do's/to-doFunctions";
+import {completeToDo, deleteToDo, unCompleteToDo} from "@/utils/to-do's/to-doFunctions";
 import {Loading} from "@/modules/utils/Loading/Loading";
 
 interface ToDo {
@@ -17,10 +17,11 @@ interface ToDo {
         isDone: boolean;
         deadline?: Date;
     },
-    id: string
+    id: string,
+    onDelete: (id: string) => void
 }
 
-export function ToDoCard({data, id}: ToDo) {
+export function ToDoCard({data, id, onDelete}: ToDo) {
 
     const [open, setOpen] = React.useState(false);
     const [isCompleting, setIsCompleting] = React.useState(false);
@@ -35,16 +36,22 @@ export function ToDoCard({data, id}: ToDo) {
     const handleCheck = () => {
         setIsCompleting(true)
         if (isDone) {
-            unCompleteToDo(id).then((result) => {
+            unCompleteToDo(id).then(() => {
                 setIsCompleting(false)
                 setIsDone(false)
             })
         } else {
-            completeToDo(id).then((result) => {
+            completeToDo(id).then(() => {
                 setIsCompleting(false)
                 setIsDone(true)
             })
         }
+    }
+
+    const handleDelete = () => {
+        deleteToDo(id).then(() => {
+            onDelete(id)
+        })
     }
 
     return (
@@ -87,12 +94,18 @@ export function ToDoCard({data, id}: ToDo) {
 
                         <DropdownMenu.Portal>
                             <DropdownMenu.Content
-                                className="bg-white rounded-md outline-none"
+                                className="bg-white rounded-md outline-none overflow-hidden"
                                 sideOffset={5}>
                                 <DropdownMenu.Item
-                                    className="flex text-sm outline-none hover:bg-gray-100 items-center gap-2 py-1 px-2 rounded-md text-black">
+                                    className="flex text-sm outline-none hover:bg-gray-100 items-center gap-2 py-1 px-2 text-black">
                                     <button onClick={() => setOpen(true)}>
                                         Edit
+                                    </button>
+                                </DropdownMenu.Item>
+                                <DropdownMenu.Item
+                                    className="flex text-sm outline-none hover:bg-red-100 items-center gap-2 py-1 px-2 bg-red-50 text-red-900">
+                                    <button onClick={handleDelete}>
+                                        Delete
                                     </button>
                                 </DropdownMenu.Item>
                             </DropdownMenu.Content>
