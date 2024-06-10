@@ -9,7 +9,7 @@ const publicPages = ['/login', '/register']
 export function middleware(request: NextRequest) {
     const loggedIn = cookies().get('loggedIn')
 
-    if (loggedIn?.value === 'false' && !publicPages.includes(request.nextUrl.pathname)) {
+    if ((loggedIn?.value === 'false' || loggedIn === undefined) && !publicPages.includes(request.nextUrl.pathname)) {
         // Construct the URL to redirect to the root page with user info
         const url = new URL('/login', request.url)
 

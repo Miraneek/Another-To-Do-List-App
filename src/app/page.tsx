@@ -1,34 +1,25 @@
 "use client"
+import {ToDos} from "@/modules/to-dos/ToDos/ToDos";
 import {useAuth} from "@/modules/auth/AuthContextProvider";
-import {editToDo} from "@/utils/to-do's/to-doFunctions";
-
+import {ToDoCreateModal} from "@/modules/to-dos/To-doCreate/ToDoCreateModal";
 export default function Page() {
 
-    const {user, logOut} = useAuth();
+    const {logOut} = useAuth()
 
-    const handleClick = () => logOut();
-
-    const handleData = async () => {
-        console.log("trying")
-        try {
-            await editToDo({
-                title: "edited",
-                description: "test",
-                priority: "low",
-                isPublic: true,
-            }, "FUVgwWA5t4qnnR0U76Sc")
-            console.log("done, good job")
-        } catch (error) {
-            console.log(error)
-        }
-
+    const handleClick = async () => {
+        logOut()
     }
+
     return <>
-        <h1 className={"text-3xl font-bold underline"}>Hello {user.displayName}</h1>
-        <button onClick={handleClick}>Log user</button>
-        <br/>
-        <button onClick={handleData}
-                className={"text-2xl bg-red-500 text-white p-2 rounded-xl hover:bg-red-600 px-6"}>test
-        </button>
+        <section className={"lg:w-8/12 w-full flex flex-col items-center mx-auto"}>
+            <div className={"flex justify-center relative w-full flex-col p-4"}>
+                <h1 className={"text-4xl font-semibold my-10"}>{"Your to-do's"}</h1>
+                <div className={"lg:absolute top-14 right-5 bg-white p-2 rounded-lg text-black"}>
+                    <ToDoCreateModal/>
+                </div>
+            </div>
+            <ToDos/>
+            <button onClick={handleClick} className={"absolute top-5 right-5 text-2xl"}>log out</button>
+        </section>
     </>
 }

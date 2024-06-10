@@ -61,7 +61,6 @@ export function LoginForm() {
                 await logIn(email, password);
             } catch (error: any) {
                 setIsSubmitting(false)
-                console.log(error.code)
                 switch (error.code) {
                     case "auth/user-not-found":
                         setErrors({...errors, mainError: 'User not found'});

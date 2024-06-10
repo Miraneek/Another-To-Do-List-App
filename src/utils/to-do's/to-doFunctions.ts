@@ -1,5 +1,7 @@
-import {addDoc, collection, deleteDoc, doc, updateDoc} from "@firebase/firestore";
-import {authCorrect, db} from "@/lib/fireBase/firebase";
+"use client"
+import {addDoc, collection, deleteDoc, doc, getDoc, getDocs, updateDoc} from "@firebase/firestore";
+import {db} from "@/lib/fireBase/firebase";
+import {getCurrentUser} from "@/utils/fireBase/fireBaseFunctions";
 
 interface ToDo {
     title: string
@@ -11,7 +13,7 @@ interface ToDo {
 
 export async function createToDo({title, description, priority, isPublic, deadline}: ToDo) {
 
-    const user = authCorrect.currentUser
+    const user = await getCurrentUser()
 
     if (!user) {
         return {failure: "You are not logged in"};
@@ -26,14 +28,14 @@ export async function createToDo({title, description, priority, isPublic, deadli
             isDone: false,
             deadline: deadline ? deadline : null
         });
-        console.log("Document written with ID: " + docRef.id + " with a tittle: " + title);
+        return "Document written with ID: " + docRef.id + " with a tittle: " + title;
     } catch (e) {
-        console.error("Error adding document: ", e);
+        return "Error adding document: " + e;
     }
 }
 
 export async function editToDo({title, description, priority, isPublic, deadline}: ToDo , id: string) {
-    const user = authCorrect.currentUser
+    const user = await getCurrentUser()
     if (!user) {
         return {failure: "You are not logged in"};
     }
@@ -52,7 +54,7 @@ export async function editToDo({title, description, priority, isPublic, deadline
 }
 
 export async function completeToDo(id: string) {
-    const user = authCorrect.currentUser
+    const user = await getCurrentUser()
     if (!user) {
         return {failure: "You are not logged in"};
     }
@@ -66,9 +68,24 @@ export async function completeToDo(id: string) {
     }
 }
 
+export async function unCompleteToDo(id: string) {
+    const user = await getCurrentUser()
+    if (!user) {
+        return {failure: "You are not logged in"};
+    }
+    try {
+        const docRef = doc(db, `users/${user.uid}/to-dos`, id);
+        await updateDoc(docRef, {
+            isDone: false
+        });
+    } catch (e) {
+        console.error("Error adding document: ", e);
+    }
+}
+
 export async function deleteToDo(id: string) {
 
-    const user = authCorrect.currentUser;
+    const user = await getCurrentUser();
 
     if (!user) {
         return { failure: "You are not logged in" };
@@ -83,4 +100,38 @@ export async function deleteToDo(id: string) {
     }
 }
 
-//TODO getAll return array of objects to render
+export async function getAllToDos() {
+
+    const user = await getCurrentUser()
+
+    if (!user) {
+        throw new Error("You have to be logged in");
+    }
+
+    const querySnapshot = await getDocs(collection(db, `users/${user.uid}/to-dos`));
+    return querySnapshot.docs
+        .filter(doc => doc.data().blank !== "blank")
+        .map(doc => ({
+            data: doc.data(),
+            id: doc.id
+        }));
+}
+
+export async function getOne(id: string) {
+    
+    const user = await getCurrentUser()
+    if (!user) {
+        return {failure: "You are not logged in"};
+    }
+    try {
+        const docRef = doc(db, `users/${user.uid}/to-dos`, id);
+        const docSnap = await getDoc(docRef);
+        if (docSnap.exists()) {
+            return docSnap.data();
+        } else {
+            console.log("No such document!");
+        }
+    } catch (e) {
+        console.error("Error adding document: ", e);
+    }
+}

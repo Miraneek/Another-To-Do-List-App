@@ -63,7 +63,9 @@ export const AuthContextProvider = ({
     const logOut = async () => {
         setUser({ email: null, uid: null, displayName: null });
         await logOutAction({})
-        return await signOut(authCorrect);
+        return await signOut(authCorrect).then(() => {
+            router.push("/login")
+        });
     };
 
     // Wrap the children with the context provider

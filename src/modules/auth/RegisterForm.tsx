@@ -30,13 +30,11 @@ export function RegisterFrom() {
                 try {
                     await logIn(data.success.email, data.success.password)
                 } catch (error) {
-                    console.log(error)
                 }
             }
         },
         onError: (error) => {
             setIsSubmitting(false);
-            console.log(error)
         },
     });
     const validateEmail = (email: string) => {
