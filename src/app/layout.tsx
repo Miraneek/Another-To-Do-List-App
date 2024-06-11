@@ -3,6 +3,7 @@ import {Inter} from "next/font/google";
 import "./globals.css";
 import {AuthContextProvider} from "@/modules/auth/AuthContextProvider";
 import React from "react";
+import {NavBar} from "@/modules/nav/NavBar";
 
 const inter = Inter({subsets: ["latin"]});
 
@@ -15,8 +16,11 @@ export default function RootLayout({children,}: Readonly<{ children: React.React
 
     return (
         <html lang="en">
-        <body className={"bg-[#1C1C21] text-white"}>
-        <AuthContextProvider>{children}</AuthContextProvider>
+        <body className={"bg-[#1C1C21] text-white pt-10"}>
+        <AuthContextProvider>
+            <NavBar/>
+            {children}
+        </AuthContextProvider>
         </body>
         </html>
     );

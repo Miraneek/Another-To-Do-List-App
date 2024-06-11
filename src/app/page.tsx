@@ -19,7 +19,6 @@ export default function Page() {
                 </div>
             </div>
             <ToDos/>
-            <button onClick={handleClick} className={"absolute top-5 right-5 text-2xl"}>log out</button>
         </section>
     </>
 }

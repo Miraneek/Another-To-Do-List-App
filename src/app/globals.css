@@ -3,5 +3,6 @@
 @tailwind utilities;
 
 *:focus {
-    outline: none
+    outline: none;
+    color: #222228;
 }

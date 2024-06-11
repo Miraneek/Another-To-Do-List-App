@@ -13,6 +13,7 @@ interface UserType {
     email: string | null;
     uid: string | null;
     displayName: string | null;
+    photoURL: string | null;
 }
 
 // Create auth context
@@ -29,7 +30,7 @@ export const AuthContextProvider = ({
 }) => {
     const router = useRouter()
     // Define the constants for the user and loading state
-    const [user, setUser] = useState<UserType>({ email: null, uid: null, displayName: null });
+    const [user, setUser] = useState<UserType>({ email: null, uid: null, displayName: null, photoURL: null });
     const [loading, setLoading] = useState<Boolean>(true);
 
     // Update the state depending on auth
@@ -39,10 +40,11 @@ export const AuthContextProvider = ({
                 setUser({
                     email: user.email,
                     uid: user.uid,
-                    displayName: user.displayName
+                    displayName: user.displayName,
+                    photoURL: user.photoURL
                 });
             } else {
-                setUser({ email: null, uid: null, displayName: null });
+                setUser({ email: null, uid: null, displayName: null, photoURL: null });
             }
         });
 
@@ -61,7 +63,7 @@ export const AuthContextProvider = ({
 
     // Logout the user
     const logOut = async () => {
-        setUser({ email: null, uid: null, displayName: null });
+        setUser({ email: null, uid: null, displayName: null, photoURL: null });
         await logOutAction({})
         return await signOut(authCorrect).then(() => {
             router.push("/login")
