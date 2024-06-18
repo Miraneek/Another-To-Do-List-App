@@ -7,6 +7,7 @@ import {IconCheck, IconDots} from "@tabler/icons-react";
 import {ToDoEdit} from "@/modules/to-dos/To-doEdit";
 import {completeToDo, deleteToDo, unCompleteToDo} from "@/utils/to-do's/to-doFunctions";
 import {Loading} from "@/modules/utils/Loading/Loading";
+import {TodoCloseView} from "@/modules/to-dos/TodoCloseView/TodoCloseView";
 
 interface ToDo {
     data: {
@@ -23,7 +24,8 @@ interface ToDo {
 
 export function ToDoCard({data, id, onDelete}: ToDo) {
 
-    const [open, setOpen] = React.useState(false);
+    const [openCloseView, setOpenCloseView] = React.useState(false);
+    const [openEdit, setOpenEdit] = React.useState(false);
     const [isCompleting, setIsCompleting] = React.useState(false);
     const [isDone, setIsDone] = React.useState(data.isDone)
 
@@ -98,7 +100,11 @@ export function ToDoCard({data, id, onDelete}: ToDo) {
                                 sideOffset={5}>
                                 <DropdownMenu.Item
                                     className="flex text-sm outline-none hover:bg-gray-100 items-center gap-2 py-1 px-2 text-black">
-                                    <button onClick={() => setOpen(true)}>
+                                    <button onClick={() => setOpenCloseView(true)}>View</button>
+                                </DropdownMenu.Item>
+                                <DropdownMenu.Item
+                                    className="flex text-sm outline-none hover:bg-gray-100 items-center gap-2 py-1 px-2 text-black">
+                                    <button onClick={() => setOpenEdit(true)}>
                                         Edit
                                     </button>
                                 </DropdownMenu.Item>
@@ -114,16 +120,27 @@ export function ToDoCard({data, id, onDelete}: ToDo) {
                 </div>
 
             </div>
-            <Dialog.Root open={open} onOpenChange={setOpen}>
+            <Dialog.Root open={openEdit} onOpenChange={setOpenEdit}>
                 <Dialog.Portal>
                     <Dialog.Overlay
                         className="bg-[rgba(0,0,0,0.5)] top-0 left-0 right-0 bottom-0 fixed grid place-content-center text-black">
                         <Dialog.Content
                             className="fixed top-[50%] left-[50%] translate-x-[-50%] lg:w-auto lg:min-w-[400px] w-[90vw] translate-y-[-50%] rounded-xl focus:outline-none">
-                            <ToDoEdit data={data} id={id} setOpen={setOpen}/>
+                            <ToDoEdit data={data} id={id} setOpen={setOpenEdit}/>
                         </Dialog.Content>
                     </Dialog.Overlay>
 
+                </Dialog.Portal>
+            </Dialog.Root>
+            <Dialog.Root open={openCloseView} onOpenChange={setOpenCloseView}>
+                <Dialog.Portal>
+                    <Dialog.Overlay
+                        className="bg-[rgba(0,0,0,0.5)] top-0 left-0 right-0 bottom-0 fixed grid place-content-center text-black">
+                        <Dialog.Content
+                            className="fixed top-[50%] left-[50%] translate-x-[-50%] lg:w-auto lg:min-w-[400px] w-[90vw] translate-y-[-50%] rounded-xl focus:outline-none">
+                            <TodoCloseView todo={data} setOpenCloseView={setOpenCloseView}/>
+                        </Dialog.Content>
+                    </Dialog.Overlay>
                 </Dialog.Portal>
             </Dialog.Root>
         </div>
