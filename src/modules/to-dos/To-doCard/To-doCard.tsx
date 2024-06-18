@@ -84,7 +84,7 @@ export function ToDoCard({data, id, onDelete}: ToDo) {
                     <div className={`rounded-full text-xs py-0.5 px-1.5 ${priorityColors[data.priority]}`}>
                         {data.priority}
                     </div>
-                    <DropdownMenu.Root>
+                    <DropdownMenu.Root modal={false}>
                         <DropdownMenu.Trigger asChild>
                             <button
                                 className="w-[25px] h-[25px] inline-flex items-center justify-center outline-none"
