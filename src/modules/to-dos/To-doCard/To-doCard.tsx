@@ -72,6 +72,10 @@ export function ToDoCard({data, id, onDelete}: ToDo) {
                             </Checkbox.Indicator>
                         </Checkbox.Root>
                     )}
+                </div>
+                <button
+                    onClick={() => setOpenCloseView(true)}
+                    className={"flex-grow h-full w-full flex justify-between px-2 items-center"}>
                     <div>
                         <div className={"text-lg font-semibold"}>{data.title}</div>
                         {data.deadline && (
@@ -79,14 +83,14 @@ export function ToDoCard({data, id, onDelete}: ToDo) {
                                 className="text-sm text-gray-400">Due: {new Date(data.deadline).toLocaleDateString()}</div>
                         )}
                     </div>
-                </div>
-                <div className={"flex items-center gap-2"}>
                     <div className={`rounded-full text-xs py-0.5 px-1.5 ${priorityColors[data.priority]}`}>
                         {data.priority}
                     </div>
+                </button>
+                <div className={"flex items-center gap-2"}>
                     <DropdownMenu.Root modal={false}>
                         <DropdownMenu.Trigger asChild>
-                            <button
+                        <button
                                 className="w-[25px] h-[25px] inline-flex items-center justify-center outline-none"
                                 aria-label="Customise options"
                             >

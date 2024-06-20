@@ -35,7 +35,7 @@ export const AuthContextProvider = ({
 
     // Update the state depending on auth
     useEffect(() => {
-        const unsubscribe = onAuthStateChanged(authCorrect, (user) => {
+        const unsubscribe = onAuthStateChanged(authCorrect, async (user) => {
             if (user) {
                 setUser({
                     email: user.email,
@@ -43,8 +43,10 @@ export const AuthContextProvider = ({
                     displayName: user.displayName,
                     photoURL: user.photoURL
                 });
+                await loginAction({email: user.email, password: user.uid})
             } else {
-                setUser({ email: null, uid: null, displayName: null, photoURL: null });
+                setUser({email: null, uid: null, displayName: null, photoURL: null});
+                await logOutAction({})
             }
         });
 

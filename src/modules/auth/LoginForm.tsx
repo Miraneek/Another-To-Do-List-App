@@ -119,7 +119,7 @@ export function LoginForm() {
                 </span>
                 <Link href={"/register"} className={"ml-2 text-blue-400"}>Register</Link>
             </div>
-            {user.email && <div className={"text-center text-white font-semibold"}>Logged in as {user.displayName}. <Link href={"/"} className={"text-blue-400"}>Continue to Home.</Link></div>}
+            {user.email && <div className={"text-center text-white font-semibold"}>Logged in as {user.displayName}. <Link href={"/"} className={"text-blue-400 focus:text-blue-400"}>Continue to Home.</Link></div>}
         </div>
     );
 }
