@@ -6,7 +6,7 @@ import {Loading} from "@/modules/utils/Loading/Loading";
 
 interface ToDo {
     id: string;
-    data: any; // Replace 'any' with the actual type of your data
+    data: any;
 }
 
 export function ToDos() {

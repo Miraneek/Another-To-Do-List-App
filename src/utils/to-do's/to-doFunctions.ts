@@ -28,7 +28,7 @@ export async function createToDo({title, description, priority, isPublic, deadli
             isDone: false,
             deadline: deadline ? deadline : null
         });
-        return "Document written with ID: " + docRef.id + " with a tittle: " + title;
+        return "Document written with ID (to-do): " + docRef.id + " with a tittle: " + title;
     } catch (e) {
         return "Error adding document: " + e;
     }
