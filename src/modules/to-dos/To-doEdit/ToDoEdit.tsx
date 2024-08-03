@@ -49,7 +49,7 @@ export function ToDoEdit({ data, id, setOpen }: ToDoEditProps) {
     };
 
     return (
-        <form onSubmit={handleSubmit} className="bg-gray-800 p-6 rounded-lg shadow-lg w-full">
+        <form onSubmit={handleSubmit} className="bg-gray-800 p-6 rounded-lg shadow-lg w-full z-50">
             <h2 className="text-white text-xl mb-4">Edit Task</h2>
 
             <div className="mb-4">

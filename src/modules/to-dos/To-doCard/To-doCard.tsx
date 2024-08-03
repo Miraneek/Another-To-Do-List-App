@@ -100,7 +100,7 @@ export function ToDoCard({data, id, onDelete}: ToDo) {
 
                         <DropdownMenu.Portal>
                             <DropdownMenu.Content
-                                className="bg-white rounded-md outline-none overflow-hidden"
+                                className="z-50 bg-white rounded-md outline-none overflow-hidden"
                                 sideOffset={5}>
                                 <DropdownMenu.Item
                                     className="flex text-sm outline-none hover:bg-gray-100 items-center gap-2 py-1 px-2 text-black">
@@ -127,7 +127,7 @@ export function ToDoCard({data, id, onDelete}: ToDo) {
             <Dialog.Root open={openEdit} onOpenChange={setOpenEdit}>
                 <Dialog.Portal>
                     <Dialog.Overlay
-                        className="bg-[rgba(0,0,0,0.5)] top-0 left-0 right-0 bottom-0 fixed grid place-content-center text-black">
+                        className="bg-[rgba(0,0,0,0.5)] top-0 left-0 right-0 bottom-0 fixed grid place-content-center text-black z-50">
                         <Dialog.Content
                             className="fixed top-[50%] left-[50%] translate-x-[-50%] lg:w-auto lg:min-w-[400px] w-[90vw] translate-y-[-50%] rounded-xl focus:outline-none">
                             <ToDoEdit data={data} id={id} setOpen={setOpenEdit}/>
@@ -139,7 +139,7 @@ export function ToDoCard({data, id, onDelete}: ToDo) {
             <Dialog.Root open={openCloseView} onOpenChange={setOpenCloseView}>
                 <Dialog.Portal>
                     <Dialog.Overlay
-                        className="bg-[rgba(0,0,0,0.5)] top-0 left-0 right-0 bottom-0 fixed grid place-content-center text-black">
+                        className="bg-[rgba(0,0,0,0.5)] z-50 top-0 left-0 right-0 bottom-0 fixed grid place-content-center text-black">
                         <Dialog.Content
                             className="fixed top-[50%] left-[50%] translate-x-[-50%] lg:w-auto lg:min-w-[400px] w-[90vw] translate-y-[-50%] rounded-xl focus:outline-none">
                             <TodoCloseView todo={data} setOpenCloseView={setOpenCloseView}/>

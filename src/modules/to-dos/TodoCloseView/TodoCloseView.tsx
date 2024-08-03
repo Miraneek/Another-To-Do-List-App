@@ -21,7 +21,7 @@ const priorityColors: { [key: string]: string } = {
 
 export function TodoCloseView({ todo, setOpenCloseView }: ToDo) {
     return (
-        <div className="bg-gray-800 p-6 rounded-lg shadow-lg w-full max-w-md mx-auto">
+        <div className="bg-gray-800 p-6 rounded-lg shadow-lg w-full max-w-md mx-auto z-50">
             <div className="flex items-center justify-between mb-4">
                 <h2 className="text-white text-4xl font-semibold flex gap-1 items-center">
                     {todo.title}

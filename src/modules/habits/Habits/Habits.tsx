@@ -38,8 +38,8 @@ export function Habits() {
     }
 
     return <div className={"flex  items-stretch w-11/12 lg:w-full px-4 gap-8"}>
-        {habits.map((habit) => (
-            <HabitCard key={habit.id} data={habit.data}/>
+        {habits.map((habit, index) => (
+            <HabitCard key={habit.id} data={habit.data} index={index}/>
         ))}
     </div>
 }

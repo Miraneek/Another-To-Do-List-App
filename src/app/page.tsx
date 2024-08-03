@@ -3,7 +3,7 @@ import {ToDoCreateModal} from "@/modules/to-dos/To-doCreate/ToDoCreateModal";
 import {Habits} from "@/modules/habits/Habits/Habits";
 export default function Page() {
     return <>
-        <section className={"lg:w-8/12 w-full flex flex-col items-center mx-auto pt-10"}>
+        <section className={"lg:w-6/12 w-full flex flex-col items-center mx-auto pt-10"}>
             <div className={"flex justify-center relative w-full flex-col p-4"}>
                 <h1 className={"text-4xl font-semibold my-6"}>Your habits</h1>
             </div>
