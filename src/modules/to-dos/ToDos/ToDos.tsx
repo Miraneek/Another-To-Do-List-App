@@ -46,7 +46,7 @@ export function ToDos() {
             {todos.map((card) => (
                 <ToDoCard key={card.id} data={card.data} id={card.id} onDelete={handleDelete}/>
             ))}
-            {todos.length === 0 && <div className={"text-center text-2xl font-semibold text-white/80"}>After you create some To-do's, <br/>they will appear here</div>}
+            {todos.length === 0 && <div className={"text-center text-2xl font-semibold text-white/80"}>After you create some To-do&apos;s, <br/>they will appear here</div>}
             {error && <div className={"text-red-700 text-4xl"}>{error}</div>}
         </div>
     );

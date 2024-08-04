@@ -81,7 +81,7 @@ export function LoginForm() {
 
     return (
         <div>
-            <form onSubmit={handleSubmit} className="w-96 text-black">
+            <form onSubmit={handleSubmit} className="lg:w-96 text-black">
                 <h2 className={"text-white text-3xl mb-4 font-bold"}>Login</h2>
                 <div className="mb-4">
                     <label htmlFor="email" className="block text-white mb-2 text-xl font-semibold">Email</label>
