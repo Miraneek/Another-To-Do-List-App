@@ -43,7 +43,7 @@ export default function RootLayout({children,}: Readonly<{ children: React.React
             <Background>
                 <div className={"flex"}>
                     <NavBar/>
-                    <div className={"flex-grow"}>
+                    <div className={"flex-grow lg:ml-52"}>
                         {children}
                     </div>
                 </div>

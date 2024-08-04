@@ -52,7 +52,7 @@ export default function UserSettings() {
     };
 
     return (
-        <div className={"min-h-screen flex items-center justify-center flex-col"}>
+        <div className={"min-h-full flex items-center justify-center flex-col"}>
             <div className={"w-full p-6 rounded-lg lg:max-w-xl flex flex-col items-start"}>
                 <h2 className={"text-white text-3xl mb-4"}>✏️Edit Profile</h2>
 

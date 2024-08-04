@@ -13,7 +13,7 @@ export function LoginForm() {
     });
     const [isSubmitting, setIsSubmitting] = useState(false);
 
-    const {logIn, user} = useAuth();
+    const {logIn} = useAuth();
     const validateEmail = (email: string) => {
         const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         return regex.test(email);
@@ -81,45 +81,46 @@ export function LoginForm() {
 
     return (
         <div>
-            <form onSubmit={handleSubmit} className="bg-white p-8 rounded shadow-md w-96 text-black">
-                <h2 className="text-2xl mb-4 text-center">Login</h2>
+            <form onSubmit={handleSubmit} className="w-96 text-black">
+                <h2 className={"text-white text-3xl mb-4 font-bold"}>Login</h2>
                 <div className="mb-4">
-                    <label htmlFor="email" className="block text-gray-700">Email</label>
+                    <label htmlFor="email" className="block text-white mb-2 text-xl font-semibold">Email</label>
                     <input
                         type="email"
                         id="email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         onBlur={() => handleBlur('email')}
-                        className={`w-full px-3 py-2 border ${errors.email ? 'border-red-500' : 'border-gray-300'} rounded`}
+                        placeholder={"Enter your email"}
+                        className={`w-full p-2 border-2 border-white/20 bg-black/20 rounded-lg text-white placeholder-gray-400 ${errors.email ? 'border-red-500' : 'border-gray-300'}`}
                     />
-                    {errors.email && <p className="text-red-500 text-sm">{errors.email}</p>}
+                    {errors.email && <p className="text-red-500 text-sm mt-1 ml-1 font-semibold">{errors.email}</p>}
                 </div>
                 <div className="mb-4">
-                    <label htmlFor="password" className="block text-gray-700">Password</label>
+                    <label htmlFor="password" className="block text-white mb-2 text-xl font-semibold">Password</label>
                     <input
                         type="password"
                         id="password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         onBlur={() => handleBlur('password')}
-                        className={`w-full px-3 py-2 border ${errors.password ? 'border-red-500' : 'border-gray-300'} rounded`}
+                        placeholder={"Enter your password"}
+                        className={`w-full p-2 border-2 border-white/20 bg-black/20 rounded-lg text-white placeholder-gray-400 ${errors.password ? 'border-red-500' : 'border-gray-300'}`}
                     />
-                    {errors.password && <p className="text-red-500 text-sm">{errors.password}</p>}
+                    {errors.password && <p className="text-red-500 text-sm mt-1 ml-1 font-semibold">{errors.password}</p>}
                 </div>
                 <button type={"submit"}
-                        className={"disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-blue-500 w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"}
+                        className={"disabled:cursor-not-allowed w-full disabled:opacity-50 hover:border-white border-transparent border-2 text-white disabled:bg-gray-400 py-2 px-3 bg-[#e500a4] rounded-lg transition duration-300 ease-in-out"}
                         disabled={isSubmitting}>Login
                 </button>
-                {errors.mainError && <p className="text-red-500 text-lg">{errors.mainError}</p>}
+                {errors.mainError && <p className="text-red-500 text-sm mt-1 ml-1 font-semibold">{errors.mainError}</p>}
             </form>
-            <div className={"mt-4 text-center text-white font-semibold"}>
+            <div className={"mt-4 text-center text-white font-semibold flex flex-col items-center"}>
                 <span>
                     Dont have an account?
                 </span>
-                <Link href={"/register"} className={"ml-2 text-blue-400"}>Register</Link>
+                <Link href={"/register"} className={"ml-2 text-blue-400 hover:text-blue-500 transition duration-300 ease-in-out text-semibold"}>Register</Link>
             </div>
-            {user.email && <div className={"text-center text-white font-semibold"}>Logged in as {user.displayName}. <Link href={"/"} className={"text-blue-400 focus:text-blue-400"}>Continue to Home.</Link></div>}
         </div>
     );
 }

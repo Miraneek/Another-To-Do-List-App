@@ -323,7 +323,7 @@ const Background = (props) => {
             <div className="absolute top-0 left-0 w-full h-full -z-50">
                 {init && <Particles id={props.id} init={particlesLoaded} options={options}/>}
             </div>
-            <div className="absolute top-0 left-0 w-screen h-screen -z-10 backdrop-blur-3xl bg-[rgba(0,4,20,0.65)]"></div>
+            <div className="absolute top-0 left-0 min-w-full min-h-full w-screen h-screen -z-10 backdrop-blur-3xl bg-[rgba(0,4,20,0.65)]"></div>
             <div className="relative z-20">
                 {props.children}
             </div>
