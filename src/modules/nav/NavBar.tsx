@@ -36,11 +36,11 @@ export function NavBar() {
             <button className={"lg:hidden fixed left-4 top-4 z-[1000]"}>
                 <Hamburger toggled={open} toggle={setOpen}/>
             </button>
-            <button className={"bg-black/40 fixed w-full h-full transition duration-300 z-40 lg:hidden " + (open ? "block" : "hidden")} onClick={() => setOpen(false)}>
+            <button className={"bg-black/50 fixed w-full h-full transition duration-300 z-40 lg:hidden " + (open ? "block" : "hidden")} onClick={() => setOpen(false)}>
 
             </button>
             <motion.nav
-                className={`h-screen bg-[rgba(28,28,33,${isMobile ? 0.8 : 0.3})] fixed left-0 top-0 pb-8 shadow-2xl shadow-[rgba(28,28,33,1)] flex flex-col items-center justify-between z-50`}
+                className={`h-screen bg-[rgba(28,28,33,${isMobile ? "0.8" : "0.3"})] fixed left-0 top-0 pb-8 shadow-2xl shadow-[rgba(28,28,33,1)] flex flex-col items-center justify-between z-50`}
                 initial={{
                     opacity: 0,
                     x: "-100%"

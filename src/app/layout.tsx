@@ -40,14 +40,14 @@ export default function RootLayout({children,}: Readonly<{ children: React.React
         </head>
         <body className={"bg-[#1C1C21] text-white"}>
         <AuthContextProvider>
-            <Background>
-                <div className={"flex"}>
-                    <NavBar/>
-                    <div className={"flex-grow pb-20"}>
-                        {children}
+                <Background>
+                    <div className={"flex"}>
+                        <NavBar/>
+                        <div className={"flex-grow lg:pb-0 pb-20"}>
+                            {children}
+                        </div>
                     </div>
-                </div>
-            </Background>
+                </Background>
         </AuthContextProvider>
         </body>
         </html>

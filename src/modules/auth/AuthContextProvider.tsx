@@ -5,9 +5,11 @@ import {
     signInWithEmailAndPassword,
     signOut
 } from 'firebase/auth';
-import {authCorrect} from "@/lib/fireBase/firebase";
+import {authCorrect, db} from "@/lib/fireBase/firebase";
 import {loginAction, logOutAction} from "@/actions/auth/authActions";
 import {useRouter} from "next/navigation";
+import {deleteDoc, doc} from "@firebase/firestore";
+import {deleteUser} from "firebase/auth";
 // User data type interface
 interface UserType {
     email: string | null;
@@ -72,9 +74,32 @@ export const AuthContextProvider = ({
         });
     };
 
+    const deleteAccount = async () => {
+        console.log("Deleting account")
+        const user = authCorrect.currentUser;
+        if (user) {
+            console.log("deleting")
+            console.log("User: " + user.uid)
+            await deleteDoc(doc(db, "users", user.uid));
+        } else {
+            console.log("No user")
+            return {failure: "You are not logged in"}
+        }
+        if (user) {
+            await deleteUser(user).catch((error) => {
+                console.log(error)
+            })
+        }
+        setUser({ email: null, uid: null, displayName: null, photoURL: null });
+        await logOutAction({})
+        return await signOut(authCorrect).then(() => {
+            router.push("/login")
+        });
+    };
+
     // Wrap the children with the context provider
     return (
-        <AuthContext.Provider value={{ user, logIn, logOut }}>
+        <AuthContext.Provider value={{ user, logIn, logOut, deleteAccount }}>
             {loading ? null : children}
         </AuthContext.Provider>
     );

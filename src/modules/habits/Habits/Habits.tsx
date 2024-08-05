@@ -37,7 +37,7 @@ export function Habits() {
         return <div className={"text-red-700"}>Error: {error}</div>;
     }
 
-    return <div className={"flex items-stretch w-full flex-wrap lg:w-full gap-8"}>
+    return <div className={"flex items-stretch lg:justify-start justify-center w-full flex-wrap lg:w-full gap-8"}>
         {habits.map((habit, index) => (
             <HabitCard key={habit.id} data={habit.data} index={index}/>
         ))}

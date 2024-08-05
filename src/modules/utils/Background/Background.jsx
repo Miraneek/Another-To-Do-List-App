@@ -3,7 +3,7 @@ import Particles, { initParticlesEngine } from "@tsparticles/react";
 import React, { useEffect, useMemo, useState } from "react";
 // import { loadAll } from "@/tsparticles/all"; // if you are going to use `loadAll`, install the "@tsparticles/all" package too.
 // import { loadFull } from "tsparticles"; // if you are going to use `loadFull`, install the "tsparticles" package too.
-import { loadSlim } from "@tsparticles/slim"; // if you are going to use `loadSlim`, install the "@tsparticles/slim" package too.
+import { loadSlim } from "@tsparticles/slim";
 // import { loadBasic } from "@tsparticles/basic"; // if you are going to use `loadBasic`, install the "@tsparticles/basic" package too.
 
 const Background = (props) => {
@@ -320,13 +320,14 @@ const Background = (props) => {
 
     return (
         <div className="relative">
-            <div className="absolute top-0 left-0 w-full h-full -z-50">
-                {init && <Particles id={props.id} init={particlesLoaded} options={options}/>}
-            </div>
-            <div className="absolute top-0 left-0 min-w-full min-h-full w-screen h-screen -z-10 backdrop-blur-3xl bg-[rgba(0,4,20,0.65)]"></div>
-            <div className="relative z-20">
-                {props.children}
-            </div>
+                <div className="absolute top-0 left-0 w-full h-full -z-50">
+                    {init && <Particles id={props.id} init={particlesLoaded} options={options}/>}
+                </div>
+                <div
+                    className="absolute top-0 left-0 min-w-full min-h-full w-screen h-screen -z-10 backdrop-blur-3xl bg-[rgba(0,4,20,0.65)]"></div>
+                <div className="relative z-20">
+                    {props.children}
+                </div>
         </div>
     );
 };

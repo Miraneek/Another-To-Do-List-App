@@ -156,14 +156,16 @@ export function RegisterFrom() {
                 </div>
                 <button type={"submit"}
                         className={"disabled:cursor-not-allowed w-full disabled:opacity-50 hover:border-white border-transparent border-2 text-white disabled:bg-gray-400 py-2 px-3 bg-[#e500a4] rounded-lg transition duration-300 ease-in-out"}
-                        disabled={isSubmitting}>Register
+                        disabled={isSubmitting}>
+                        Register
                 </button>
+                {isSubmitting && <p className={"text-[#e500a4] text-sm mt-1 ml-1 font-semibold"}>Check your email for verification.</p>}
                 {errors.mainError && <p className="text-red-500 text-sm mt-1 ml-1 font-semibold">{errors.mainError}</p>}
             </form>
             <div className={"mt-4 text-center text-white font-semibold flex flex-col items-center"}>
-        <span>
-            Already have an account?
-        </span>
+                <span>
+                    Already have an account?
+                </span>
                 <Link href={"/login"}
                       className={"ml-2 text-blue-400 hover:text-blue-500 transition duration-300 ease-in-out text-semibold"}>Login</Link>
             </div>

@@ -8,31 +8,31 @@ import {cookies} from "next/headers";
 import {collection, doc, setDoc} from "@firebase/firestore";
 
 export const registerUserAction = action(registerSchema, async ({username, password, email}) => {
-
     try {
         const userCredential = await createUserWithEmailAndPassword(authCorrect, email, password);
         const user = userCredential.user;
 
-        /*await sendEmailVerification(user);*/
+        await sendEmailVerification(user);
+        console.log("Verification email sent to: " + email);
 
         try {
+            // Create a document in Firestore indicating that the user needs to verify their email
             await setDoc(doc(db, "users", user.uid), {
                 username: username,
+                emailVerified: false, // Flag to indicate email verification status
                 friends: [],
             });
             console.log("Document written with ID: " + user.uid);
 
-            collection(db, `users/${user.uid}/to-dos`);
+            // Creating placeholder documents for to-dos and habits
             await setDoc(doc(db, `users/${user.uid}/to-dos`, "Placeholder"), {
                 blank: "blank"
-            })
+            });
             console.log("To-dos collection created with ID: " + user.uid);
 
-
-            collection(db, `users/${user.uid}/habits`);
             await setDoc(doc(db, `users/${user.uid}/habits`, "Placeholder"), {
                 blank: "blank"
-            })
+            });
             console.log("Habit-tracker collection created with ID: " + user.uid);
 
         } catch (e) {
@@ -41,7 +41,7 @@ export const registerUserAction = action(registerSchema, async ({username, passw
 
         await updateProfile(user, {
             displayName: username,
-        })
+        });
 
         console.log("Registered user: " + username + " " + user.email);
 
