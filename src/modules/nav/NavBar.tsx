@@ -40,7 +40,7 @@ export function NavBar() {
 
             </button>
             <motion.nav
-                className={`h-screen bg-[rgba(28,28,33,${isMobile ? "0.8" : "0.3"})] fixed left-0 top-0 pb-8 shadow-2xl shadow-[rgba(28,28,33,1)] flex flex-col items-center justify-between z-50`}
+                className={`h-screen bg-[rgba(28,28,33,0.4)] fixed left-0 top-0 lg:pb-8 pb-32 shadow-2xl shadow-[rgba(28,28,33,1)] flex flex-col items-center justify-between z-50`}
                 initial={{
                     opacity: 0,
                     x: "-100%"
