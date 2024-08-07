@@ -1,9 +1,9 @@
 "use client"
-import React, {useState} from 'react';
-import {useAuth} from "@/modules/auth/AuthContextProvider";
-import {editDisplayName, editPhotoUrl, resetPassword} from "@/utils/profile/editProfileFunctions";
+import React, { useState } from 'react';
+import { useAuth } from "@/modules/auth/AuthContextProvider";
+import { editDisplayName, editPhotoUrl, resetPassword } from "@/utils/profile/editProfileFunctions";
 import * as AlertDialog from '@radix-ui/react-alert-dialog';
-import {AnimatePresence, motion} from "framer-motion";
+import { motion } from "framer-motion";
 
 interface ProfileData {
     username: string;
@@ -11,7 +11,7 @@ interface ProfileData {
 }
 
 export default function UserSettings() {
-    const {user, deleteAccount} = useAuth()
+    const { user, deleteAccount } = useAuth();
     const [formData, setFormData] = useState<ProfileData>({
         username: '',
         profilePictureUrl: '',
@@ -21,7 +21,7 @@ export default function UserSettings() {
     const [isResettingPassword, setIsResettingPassword] = useState(false);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const {name, value} = e.target;
+        const { name, value } = e.target;
         setFormData(prevFormData => ({
             ...prevFormData,
             [name]: value
@@ -29,9 +29,9 @@ export default function UserSettings() {
     };
 
     const handleResetPassword = () => {
-        resetPassword(user.email).then((res) => {
+        resetPassword(user.email).then(() => {
             setIsResettingPassword(true);
-        })
+        });
     };
 
     const handleUsernameChange = (e: React.FormEvent<HTMLFormElement>) => {
@@ -39,8 +39,8 @@ export default function UserSettings() {
         setIsSubmittingUsername(true);
         editDisplayName(formData.username).then(() => {
             setIsSubmittingUsername(false);
-            setFormData({username: '', profilePictureUrl: ''});
-        })
+            setFormData({ username: '', profilePictureUrl: '' });
+        });
     };
 
     const handleProfilePictureChange = (e: React.FormEvent<HTMLFormElement>) => {
@@ -48,8 +48,8 @@ export default function UserSettings() {
         setIsSubmittingProfilePicture(true);
         editPhotoUrl(formData.profilePictureUrl).then(() => {
             setIsSubmittingProfilePicture(false);
-            setFormData({username: '', profilePictureUrl: ''});
-        })
+            setFormData({ username: '', profilePictureUrl: '' });
+        });
     };
 
     return (
@@ -80,9 +80,7 @@ export default function UserSettings() {
                 </form>
 
                 <form onSubmit={handleProfilePictureChange} className={"mb-4 flex items-start flex-col w-full"}>
-                    <label className={"block text-white mb-2 text-xl"}>Profile Picture
-                        Url
-                    </label>
+                    <label className={"block text-white mb-2 text-xl"}>Profile Picture Url</label>
                     <div className={"flex w-full"}>
                         <input
                             type={"text"}
@@ -114,17 +112,17 @@ export default function UserSettings() {
                         <AlertDialog.Root>
                             <AlertDialog.Trigger
                                 className={"hover:border-white border-transparent border-2 text-white disabled:bg-gray-400 py-2 px-3 bg-[#d90816] rounded-lg transition duration-300 ease-in-out"}
-                                asChild>
+                            >
                                 Delete Account
                             </AlertDialog.Trigger>
                             <AlertDialog.Portal>
-                                <AlertDialog.Overlay className={"bg-black/40 fixed inset-0 z-40"}/>
+                                <AlertDialog.Overlay className={"bg-black/40 fixed inset-0 z-40"} />
                                 <AlertDialog.Content
                                     className={"fixed z-50 top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]"}
                                 >
                                     <motion.div
-                                        initial={{opacity: 0, scale: 0.8, y: 10}}
-                                        animate={{opacity: 1, scale: 1, y: 0}}
+                                        initial={{ opacity: 0, scale: 0.8, y: 10 }}
+                                        animate={{ opacity: 1, scale: 1, y: 0 }}
                                         className={"border border-white/10 p-6 backdrop-blur-xl bg-black/0 lg:w-auto lg:min-w-[400px] rounded-xl focus:outline-none"}
                                     >
                                         <AlertDialog.Title className={"text-white text-2xl font-semibold"}>
@@ -137,13 +135,14 @@ export default function UserSettings() {
                                         </AlertDialog.Description>
                                         <div className={"flex gap-4"}>
                                             <AlertDialog.Cancel
-                                                className={"\"hover:border-white border-transparent border-2 text-white disabled:bg-gray-400 py-2 px-3 bg-white/10 rounded-lg transition duration-300 ease-in-out\""}
+                                                className={"hover:border-white/60 border-transparent border-2 text-white disabled:bg-gray-400 py-2 px-3 bg-white/10 rounded-lg transition duration-300 ease-in-out"}
                                             >
                                                 Cancel
                                             </AlertDialog.Cancel>
                                             <AlertDialog.Action
                                                 onClick={deleteAccount}
-                                                className={"hover:border-white border-transparent border-2 text-white disabled:bg-gray-400 py-2 px-3 bg-[#d90816] rounded-lg transition duration-300 ease-in-out"}>
+                                                className={"hover:border-white border-transparent border-2 text-white disabled:bg-gray-400 py-2 px-3 bg-[#d90816] rounded-lg transition duration-300 ease-in-out"}
+                                            >
                                                 Delete Account
                                             </AlertDialog.Action>
                                         </div>

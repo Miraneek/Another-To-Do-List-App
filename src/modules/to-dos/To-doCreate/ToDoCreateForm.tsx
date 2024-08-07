@@ -53,7 +53,7 @@ export function ToDoCreateForm({setOpen}: ToDoCreateProps) {
     };
 
     return (
-        <form onSubmit={handleSubmit} className="bg-gray-800 p-6 rounded-lg w-full">
+        <form onSubmit={handleSubmit}>
             <h2 className="text-white text-xl mb-4">Create To-Do</h2>
 
             <div className="mb-4">
@@ -64,7 +64,7 @@ export function ToDoCreateForm({setOpen}: ToDoCreateProps) {
                     name="title"
                     value={formData.title}
                     onChange={handleChange}
-                    className="w-full p-2 border border-gray-300 rounded-md"
+                    className="w-full p-2 border-2 border-white/20 bg-black/20 rounded-lg text-white placeholder-gray-400"
                 />
             </div>
 
@@ -75,7 +75,7 @@ export function ToDoCreateForm({setOpen}: ToDoCreateProps) {
                     name="description"
                     value={formData.description}
                     onChange={handleChange}
-                    className="w-full p-2 border border-gray-300 rounded-md"
+                    className="w-full p-2 border-2 overflow-auto border-white/20 bg-black/20 rounded-lg text-white placeholder-gray-400"
                 />
             </div>
 
@@ -86,11 +86,11 @@ export function ToDoCreateForm({setOpen}: ToDoCreateProps) {
                     name="priority"
                     value={formData.priority}
                     onChange={handleChange}
-                    className="w-full p-2 border border-gray-300 rounded-md"
+                    className="w-full p-2 border-2 border-white/20 bg-black appearance-none placeholder-gray-400 rounded-lg text-white"
                 >
-                    <option value="low">Low</option>
-                    <option value="medium">Medium</option>
-                    <option value="high">High</option>
+                    <option value={"low"}>Low</option>
+                    <option value={"medium"}>Medium</option>
+                    <option value={"high"}>High</option>
                 </select>
             </div>
 
@@ -101,7 +101,7 @@ export function ToDoCreateForm({setOpen}: ToDoCreateProps) {
                     name="isPublic"
                     checked={formData.isPublic}
                     onChange={handleChange}
-                    className="mr-2"
+                    className="block w-4 aspect-square mr-2 hover:border-white border-transparent bg-black/20 border-2 re rounded-lg transition duration-300 ease-in-out"
                 />
                 <label className="text-white" htmlFor="isPublic">Public</label>
             </div>
