@@ -118,12 +118,12 @@ export default function UserSettings() {
                             <AlertDialog.Portal>
                                 <AlertDialog.Overlay className={"bg-black/40 fixed inset-0 z-40"} />
                                 <AlertDialog.Content
-                                    className={"fixed z-50 top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]"}
+                                    className={"fixed z-50 top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] lg:w-auto lg:min-w-[400px] w-11/12"}
                                 >
                                     <motion.div
                                         initial={{ opacity: 0, scale: 0.8, y: 10 }}
                                         animate={{ opacity: 1, scale: 1, y: 0 }}
-                                        className={"border border-white/10 p-6 backdrop-blur-xl bg-black/0 lg:w-auto lg:min-w-[400px] rounded-xl focus:outline-none"}
+                                        className={"border border-white/10 p-6 backdrop-blur-xl bg-black/0 rounded-xl focus:outline-none"}
                                     >
                                         <AlertDialog.Title className={"text-white text-2xl font-semibold"}>
                                             ❌Delete Account❌

@@ -106,7 +106,7 @@ export function ToDoCreateForm({setOpen}: ToDoCreateProps) {
                 <label className="text-white" htmlFor="isPublic">Public</label>
             </div>
 
-            <button type="submit" disabled={isSubmitting} className="bg-blue-500 text-white py-2 px-4 rounded-md">
+            <button type="submit" disabled={isSubmitting} className="bg-[#e500a4] hover:border-white border-transparent border-2 text-white py-2 px-4 rounded-md">
                 {isSubmitting ? <Loading/> : 'Create'}
             </button>
         </form>

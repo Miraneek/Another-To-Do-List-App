@@ -18,7 +18,7 @@ export function ToDoCreateModal() {
                 <Dialog.Overlay
                     className={"bg-black/40 fixed inset-0 z-40"}>
                     <Dialog.Content
-                        className="border border-white/10 p-6 backdrop-blur-xl bg-black/0 lg:w-auto lg:min-w-[400px] rounded-xl focus:outline-none fixed z-50 top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]">
+                        className="border w-11/12 border-white/10 p-6 backdrop-blur-xl bg-black/0 lg:w-auto lg:min-w-[400px] rounded-xl focus:outline-none fixed z-50 top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]">
                         <ToDoCreateForm setOpen={setOpen}/>
                     </Dialog.Content>
                 </Dialog.Overlay>
