@@ -8,6 +8,7 @@ import {ToDoEdit} from "@/modules/to-dos/To-doEdit";
 import {completeToDo, deleteToDo, unCompleteToDo} from "@/utils/to-do's/to-doFunctions";
 import {Loading} from "@/modules/utils/Loading/Loading";
 import {TodoCloseView} from "@/modules/to-dos/TodoCloseView/TodoCloseView";
+import { twMerge } from 'tailwind-merge'
 
 interface ToDo {
     data: {
@@ -56,9 +57,10 @@ export function ToDoCard({data, id, onDelete}: ToDo) {
         })
     }
 
+    // {            className={(isDone ? "shadow-green-900 order-10" : (data.priority === "high" ? "order-1" : data.priority === "medium" ? "order-2" : "order-3")) + " w-full rounded-lg shadow-lg"}}
     return (
         <div
-            className={(isDone ? "bg-green-900 order-10" : (data.priority === "high" ? "order-1" : data.priority === "medium" ? "order-2" : "order-3")) + " w-full rounded-lg shadow-lg"}>
+            className={twMerge("relative shadow-white/10 bg-black/10 shadow-lg rounded-2xl", isDone ? "shadow-green-900 order-10" : data.priority === "high" ? "order-1" : data.priority === "medium" ? "order-2" : "order-3")}>
             <div className="flex items-center justify-between p-4 text-white w-full">
                 <div className={"flex items-center gap-3"}>
                     {isCompleting ? <Loading/> : (
@@ -100,21 +102,21 @@ export function ToDoCard({data, id, onDelete}: ToDo) {
 
                         <DropdownMenu.Portal>
                             <DropdownMenu.Content
-                                className="z-50 bg-white rounded-md outline-none overflow-hidden"
+                                className="z-50 bg-black/10 text-white backdrop-blur-xl rounded-md outline-none overflow-hidden"
                                 sideOffset={5}>
                                 <DropdownMenu.Item
-                                    className="flex text-sm outline-none hover:bg-gray-100 items-center gap-2 py-1 px-2 text-black">
-                                    <button onClick={() => setOpenCloseView(true)}>View</button>
+                                    className="flex text-sm outline-none hover:bg-white/10 items-center gap-2 py-1 px-2">
+                                    <button onClick={() => setOpenCloseView(true)} className={"text-center w-full"}>View</button>
                                 </DropdownMenu.Item>
                                 <DropdownMenu.Item
-                                    className="flex text-sm outline-none hover:bg-gray-100 items-center gap-2 py-1 px-2 text-black">
-                                    <button onClick={() => setOpenEdit(true)}>
+                                    className="flex text-sm outline-none hover:bg-white/10 items-center gap-2 py-1 px-2">
+                                    <button onClick={() => setOpenEdit(true)} className={"text-center w-full"}>
                                         Edit
                                     </button>
                                 </DropdownMenu.Item>
                                 <DropdownMenu.Item
-                                    className="flex text-sm outline-none hover:bg-red-100 items-center gap-2 py-1 px-2 bg-red-50 text-red-900">
-                                    <button onClick={handleDelete}>
+                                    className="flex text-sm outline-none hover:bg-red-800/40 items-center gap-2 py-1 px-2 bg-red-800/20 text-red-400">
+                                    <button onClick={handleDelete} className={"text-center w-full"}>
                                         Delete
                                     </button>
                                 </DropdownMenu.Item>
