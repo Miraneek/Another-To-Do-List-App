@@ -60,7 +60,7 @@ export function ToDoCard({data, id, onDelete}: ToDo) {
     // {            className={(isDone ? "shadow-green-900 order-10" : (data.priority === "high" ? "order-1" : data.priority === "medium" ? "order-2" : "order-3")) + " w-full rounded-lg shadow-lg"}}
     return (
         <div
-            className={twMerge("relative shadow-white/10 bg-black/10 shadow-lg rounded-2xl", isDone ? "shadow-green-900 order-10" : data.priority === "high" ? "order-1" : data.priority === "medium" ? "order-2" : "order-3")}>
+            className={twMerge("relative shadow-white/10 backdrop-blur-2xl", isDone ? "shadow-green-900 order-10" : data.priority === "high" ? "order-1" : data.priority === "medium" ? "order-2" : "order-3")}>
             <div className="flex items-center justify-between p-4 text-white w-full">
                 <div className={"flex items-center gap-3"}>
                     {isCompleting ? <Loading/> : (
