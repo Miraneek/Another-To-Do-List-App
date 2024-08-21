@@ -1,5 +1,5 @@
 "use client"
-import {addDoc, collection, deleteDoc, doc, getDoc, getDocs, updateDoc} from "@firebase/firestore";
+import {addDoc, collection, deleteDoc, doc, getDoc, getDocs, updateDoc, increment} from "@firebase/firestore";
 import {db} from "@/lib/fireBase/firebase";
 import {getCurrentUser} from "@/utils/fireBase/fireBaseFunctions";
 
@@ -28,12 +28,28 @@ export async function createHabit({title, emoji}: createHabit) {
         const docRef = await addDoc(collection(db, `users/${user.uid}/habits`), {
             title: title,
             emoji: emoji,
+            lastCompleted: Date().toString(),
             isDoneToday: false,
             streak: 0
         });
         return "Document written with ID (habit): " + docRef.id + " with a tittle: " + title;
     } catch (e) {
         return "Error adding document (habit createHabit): " + e;
+    }
+}
+
+export async function resetHabit(id: string) {
+    const user = await getCurrentUser()
+    if (!user) {
+        return {failure: "You are not logged in"};
+    }
+    try {
+        const docRef = doc(db, `users/${user.uid}/habits`, id);
+        await updateDoc(docRef, {
+            streak: 0
+        });
+    } catch (e) {
+        console.error("Error adding document (habit ResetHabit): ", e);
     }
 }
 
@@ -45,7 +61,8 @@ export async function setCompleationOnHabit(id: string, isDone: boolean) {
     try {
         const docRef = doc(db, `users/${user.uid}/habits`, id);
         await updateDoc(docRef, {
-            isDoneToday: isDone
+            isDoneToday: isDone,
+            streak: increment(1)
         });
     } catch (e) {
         console.error("Error adding document (habit CompleteHabit): ", e);

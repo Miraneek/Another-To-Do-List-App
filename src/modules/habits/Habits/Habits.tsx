@@ -6,7 +6,13 @@ import {Loading} from "@/modules/utils/Loading/Loading";
 import {HabitCreate} from "@/modules/habits/HabitCreate/HabitCreate";
 
 interface Habit {
-    data: any
+    data: {
+        title: string;
+        emoji: string;
+        LastCompleted: string;
+        isDoneToday: boolean;
+        streak: number;
+    }
     id: string
 }
 

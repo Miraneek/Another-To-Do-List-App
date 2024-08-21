@@ -2,14 +2,14 @@
 import {motion} from "framer-motion";
 import {Emoji} from "emoji-picker-react";
 import {twMerge} from "tailwind-merge";
-import {deleteHabit, setCompleationOnHabit} from "@/utils/habits/habitsFunctions";
-import React, {useState} from "react";
+import {deleteHabit, resetHabit, setCompleationOnHabit} from "@/utils/habits/habitsFunctions";
+import React, {useEffect, useState} from "react";
 import * as AlertDialog from "@radix-ui/react-alert-dialog";
 import {IconTrash} from "@tabler/icons-react";
 
 interface Habit {
     data: {
-        title: string; emoji: string; isPublic: boolean; isDoneToday: boolean; streak: number;
+        title: string; emoji: string; lastCompleted: string; isDoneToday: boolean; streak: number;
     }
     id: string;
     index: number;
@@ -18,6 +18,15 @@ interface Habit {
 export function HabitCard({data, id, index}: Habit) {
 
     const [isDoneToday, setIsDoneToday] = useState(data.isDoneToday);
+
+    useEffect(() => {
+        const yesterday = new Date();
+        yesterday.setDate(yesterday.getDate() - 1);
+
+        if (data.lastCompleted !== yesterday.toString() || data.lastCompleted !== Date().toString()) {
+            resetHabit(id).then(r => console.log(r));
+        }
+    })
 
     const handlClick = () => {
         if (isDoneToday){
