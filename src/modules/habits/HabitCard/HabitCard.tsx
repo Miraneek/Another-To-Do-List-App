@@ -11,8 +11,8 @@ interface Habit {
     data: {
         title: string; emoji: string; isPublic: boolean; isDoneToday: boolean; streak: number;
     }
-    id: string
-    index: number
+    id: string;
+    index: number;
 }
 
 export function HabitCard({data, id, index}: Habit) {
