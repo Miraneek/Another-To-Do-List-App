@@ -1,8 +1,9 @@
 "use client"
 import {HabitCard} from "@/modules/habits/HabitCard/HabitCard";
 import {useEffect, useState} from "react";
-import {createHabit, getAllHabits} from "@/utils/habits/habitsFunctions";
+import {getAllHabits} from "@/utils/habits/habitsFunctions";
 import {Loading} from "@/modules/utils/Loading/Loading";
+import {HabitCreate} from "@/modules/habits/HabitCreate/HabitCreate";
 
 interface Habit {
     data: any
@@ -25,7 +26,6 @@ export function Habits() {
                 setError(error.message);
             }
         }
-
         fetchHabits();
     }, []);
 
@@ -38,9 +38,7 @@ export function Habits() {
     }
 
     return <div className={"flex items-stretch lg:justify-start justify-center w-full flex-wrap lg:w-full gap-8"}>
-        {habits.map((habit, index) => (
-            <HabitCard key={habit.id} data={habit.data} index={index}/>
-        ))}
-        {habits.length === 0 && <div className={"w-full text-center text-2xl font-semibold text-white/80"}>Create some Habit&apos;s</div>}
+        {habits.map((habit, index) => (<HabitCard key={habit.id} data={habit.data} id={habit.id} index={index}/>))}
+        <HabitCreate index={habits.length + 1}/>
     </div>
 }

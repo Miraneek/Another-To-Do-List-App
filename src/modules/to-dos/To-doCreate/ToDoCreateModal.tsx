@@ -9,10 +9,9 @@ export function ToDoCreateModal() {
 
     return (
         <Dialog.Root open={open} onOpenChange={setOpen}>
-            <Dialog.Trigger>
-                <button className={"hover:border-white border-transparent border-2 text-white disabled:bg-gray-400 py-2 px-3 bg-[#e500a4] rounded-lg transition duration-300 ease-in-out"}>
-                    Create new to-do
-                </button>
+            <Dialog.Trigger
+                className={"hover:border-white border-transparent border-2 text-white disabled:bg-gray-400 py-2 px-3 bg-[#e500a4] rounded-lg transition duration-300 ease-in-out"}>
+                Create new to-do
             </Dialog.Trigger>
             <Dialog.Portal>
                 <Dialog.Overlay

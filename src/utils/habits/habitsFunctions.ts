@@ -14,10 +14,9 @@ interface habit {
 interface createHabit {
     title: string;
     emoji: string;
-    isPublic: boolean;
 }
 
-export async function createHabit({title, emoji, isPublic}: createHabit) {
+export async function createHabit({title, emoji}: createHabit) {
 
     const user = await getCurrentUser()
 
@@ -29,7 +28,6 @@ export async function createHabit({title, emoji, isPublic}: createHabit) {
         const docRef = await addDoc(collection(db, `users/${user.uid}/habits`), {
             title: title,
             emoji: emoji,
-            isPublic: isPublic,
             isDoneToday: false,
             streak: 0
         });
@@ -39,7 +37,7 @@ export async function createHabit({title, emoji, isPublic}: createHabit) {
     }
 }
 
-export async function completeHabit(id: string) {
+export async function setCompleationOnHabit(id: string, isDone: boolean) {
     const user = await getCurrentUser()
     if (!user) {
         return {failure: "You are not logged in"};
@@ -47,14 +45,14 @@ export async function completeHabit(id: string) {
     try {
         const docRef = doc(db, `users/${user.uid}/habits`, id);
         await updateDoc(docRef, {
-            isDoneToday: true
+            isDoneToday: isDone
         });
     } catch (e) {
         console.error("Error adding document (habit CompleteHabit): ", e);
     }
 }
 
-export async function DeleteHabit(id: string) {
+export async function deleteHabit(id: string) {
 
     const user = await getCurrentUser();
 

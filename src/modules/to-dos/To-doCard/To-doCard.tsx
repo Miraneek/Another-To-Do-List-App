@@ -8,7 +8,7 @@ import {ToDoEdit} from "@/modules/to-dos/To-doEdit";
 import {completeToDo, deleteToDo, unCompleteToDo} from "@/utils/to-do's/to-doFunctions";
 import {Loading} from "@/modules/utils/Loading/Loading";
 import {TodoCloseView} from "@/modules/to-dos/TodoCloseView/TodoCloseView";
-import { twMerge } from 'tailwind-merge'
+import {twMerge} from 'tailwind-merge'
 
 interface ToDo {
     data: {
@@ -56,24 +56,20 @@ export function ToDoCard({data, id, onDelete}: ToDo) {
             onDelete(id)
         })
     }
-
-    // {            className={(isDone ? "shadow-green-900 order-10" : (data.priority === "high" ? "order-1" : data.priority === "medium" ? "order-2" : "order-3")) + " w-full rounded-lg shadow-lg"}}
     return (
         <div
-            className={twMerge("relative shadow-white/10 backdrop-blur-2xl", isDone ? "shadow-green-900 order-10" : data.priority === "high" ? "order-1" : data.priority === "medium" ? "order-2" : "order-3")}>
+            className={twMerge("relative bg-black/20 shadow-lg rounded-3xl shadow-white/10 backdrop-blur-2xl", isDone ? "shadow-green-900 order-10" : data.priority === "high" ? "order-1" : data.priority === "medium" ? "order-2" : "order-3")}>
             <div className="flex items-center justify-between p-4 text-white w-full">
                 <div className={"flex items-center gap-3"}>
-                    {isCompleting ? <Loading/> : (
-                        <Checkbox.Root
-                            className="flex border-2 border-[#4F5461] h-[26px] w-[26px] appearance-none items-center justify-center rounded-lg outline-none"
-                            onCheckedChange={handleCheck}
-                            defaultChecked={isDone}
-                        >
-                            <Checkbox.Indicator>
-                                <IconCheck stroke={2} color={"#858da2"}/>
-                            </Checkbox.Indicator>
-                        </Checkbox.Root>
-                    )}
+                    <Checkbox.Root
+                        className="flex border-2 border-[#4F5461] h-[26px] w-[26px] appearance-none items-center justify-center rounded-lg outline-none"
+                        onCheckedChange={handleCheck}
+                        defaultChecked={isDone}
+                    >
+                        {isCompleting ? <Loading/> : <Checkbox.Indicator>
+                            <IconCheck stroke={2} color={"#858da2"}/>
+                        </Checkbox.Indicator>}
+                    </Checkbox.Root>
                 </div>
                 <button
                     onClick={() => setOpenCloseView(true)}
@@ -92,7 +88,7 @@ export function ToDoCard({data, id, onDelete}: ToDo) {
                 <div className={"flex items-center gap-2"}>
                     <DropdownMenu.Root modal={false}>
                         <DropdownMenu.Trigger asChild>
-                        <button
+                            <button
                                 className="w-[25px] h-[25px] inline-flex items-center justify-center outline-none"
                                 aria-label="Customise options"
                             >
@@ -106,7 +102,9 @@ export function ToDoCard({data, id, onDelete}: ToDo) {
                                 sideOffset={5}>
                                 <DropdownMenu.Item
                                     className="flex text-sm outline-none hover:bg-white/10 items-center gap-2 py-1 px-2">
-                                    <button onClick={() => setOpenCloseView(true)} className={"text-center w-full"}>View</button>
+                                    <button onClick={() => setOpenCloseView(true)}
+                                            className={"text-center w-full"}>View
+                                    </button>
                                 </DropdownMenu.Item>
                                 <DropdownMenu.Item
                                     className="flex text-sm outline-none hover:bg-white/10 items-center gap-2 py-1 px-2">
