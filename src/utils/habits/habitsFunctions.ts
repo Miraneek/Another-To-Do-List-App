@@ -8,6 +8,17 @@ interface createHabit {
     emoji: string;
 }
 
+interface Habit {
+    data: {
+        emoji: string;
+        isDoneToday: boolean;
+        lastCompleted: string;
+        streak: number;
+        title: string;
+    };
+    id: string;
+}
+
 export async function createHabit({title, emoji}: createHabit) {
 
     const user = await getCurrentUser()
@@ -91,7 +102,7 @@ export async function deleteHabit(id: string) {
     const user = await getCurrentUser();
 
     if (!user) {
-        return { failure: "You are not logged in" };
+        return {failure: "You are not logged in"};
     }
 
     try {
@@ -115,7 +126,7 @@ export async function getAllHabits() {
     return querySnapshot.docs
         .filter(doc => doc.data().blank !== "blank")
         .map(doc => ({
-            data: doc.data(),
+            data: doc.data() as Habit['data'],
             id: doc.id
         }));
 }

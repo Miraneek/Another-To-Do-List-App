@@ -7,29 +7,31 @@ import {HabitCreate} from "@/modules/habits/HabitCreate/HabitCreate";
 
 interface Habit {
     data: {
-        title: string;
         emoji: string;
-        LastCompleted: string;
         isDoneToday: boolean;
+        lastCompleted: string;
         streak: number;
+        title: string;
     }
     id: string
 }
 
 export function Habits() {
 
-    const [habits, setHabits] = useState<Habit[]>([]);
+    const [habits, setHabits] = useState([] as Habit[]);
     const [error, setError] = useState<string | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
 
     useEffect(() => {
         async function fetchHabits() {
             try {
-                const result = await getAllHabits();
-                setHabits(result);
+                const habits: Habit[] = await getAllHabits();
+
+                setHabits(habits);
                 setLoading(false)
             } catch (error: any) {
                 setError(error.message);
+                setLoading(false);
             }
         }
         fetchHabits();
