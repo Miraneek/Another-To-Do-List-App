@@ -2,7 +2,7 @@
 import {motion} from "framer-motion";
 import {Emoji} from "emoji-picker-react";
 import {twMerge} from "tailwind-merge";
-import {deleteHabit, resetHabit, setCompleationOnHabit} from "@/utils/habits/habitsFunctions";
+import {addStreakToHabit, deleteHabit, setCompleationOnHabit} from "@/utils/habits/habitsFunctions";
 import React, {useEffect, useState} from "react";
 import * as AlertDialog from "@radix-ui/react-alert-dialog";
 import {IconTrash} from "@tabler/icons-react";
@@ -20,21 +20,18 @@ export function HabitCard({data, id, index}: Habit) {
     const [isDoneToday, setIsDoneToday] = useState(data.isDoneToday);
 
     useEffect(() => {
-        const yesterday = new Date();
-        yesterday.setDate(yesterday.getDate() - 1);
 
-        if (data.lastCompleted !== yesterday.toString() || data.lastCompleted !== Date().toString()) {
-            resetHabit(id).then(r => console.log(r));
-        }
-    })
+    }, [])
 
     const handlClick = () => {
         if (isDoneToday){
             setIsDoneToday(false);
             setCompleationOnHabit(id, false);
+            addStreakToHabit(id, false)
         } else {
             setIsDoneToday(true);
             setCompleationOnHabit(id, true);
+            addStreakToHabit(id, true)
         }
     }
 
@@ -54,7 +51,7 @@ export function HabitCard({data, id, index}: Habit) {
             className={twMerge("w-10/12 mx-auto aspect-square relative rounded-full bg-white/10 hover:bg-white/20 transition-all duration-300 ease-in-out text-3xl sm:text-5xl border-white border-2 shadow-white shadow-md flex-wrap", isDoneToday && "shadow-green-300 border-green-300 bg-green-300/20 hover:bg-green-300/30")}>
                 <span
                     className={"absolute h-full w-full flex items-center justify-center top-[50%] left-1/2 -translate-x-1/2 -translate-y-1/2"}>
-                        <Emoji unified={data.emoji} size={70}/>
+                        <Emoji unified={data.emoji} size={50}/>
                 </span>
         </button>
         <div className={"flex items-center gap-2"}>

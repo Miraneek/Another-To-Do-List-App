@@ -1,15 +1,7 @@
 "use client"
-import {addDoc, collection, deleteDoc, doc, getDoc, getDocs, updateDoc, increment} from "@firebase/firestore";
+import {addDoc, collection, deleteDoc, doc, getDoc, getDocs, updateDoc} from "@firebase/firestore";
 import {db} from "@/lib/fireBase/firebase";
 import {getCurrentUser} from "@/utils/fireBase/fireBaseFunctions";
-
-interface habit {
-    title: string;
-    emoji: string;
-    isPublic: boolean;
-    isDoneToday: boolean;
-    streak: number;
-}
 
 interface createHabit {
     title: string;
@@ -25,10 +17,11 @@ export async function createHabit({title, emoji}: createHabit) {
     }
 
     try {
+        const date = new Date();
         const docRef = await addDoc(collection(db, `users/${user.uid}/habits`), {
             title: title,
             emoji: emoji,
-            lastCompleted: Date().toString(),
+            lastCompleted: date.toLocaleDateString(),
             isDoneToday: false,
             streak: 0
         });
@@ -59,11 +52,35 @@ export async function setCompleationOnHabit(id: string, isDone: boolean) {
         return {failure: "You are not logged in"};
     }
     try {
+        const date = new Date();
+        const yesterday = new Date(date);
+        yesterday.setDate(date.getDate() - 1);
         const docRef = doc(db, `users/${user.uid}/habits`, id);
-        await updateDoc(docRef, {
-            isDoneToday: isDone,
-            streak: increment(1)
-        });
+        const docSnap = await getDoc(docRef);
+        if (docSnap.exists()) {
+            await updateDoc(docRef, {
+                isDoneToday: isDone,
+                lastCompleted: isDone ? date.toLocaleDateString() : docSnap.data().streak > 1 ? yesterday.toLocaleDateString() : null
+            });
+        }
+    } catch (e) {
+        console.error("Error adding document (habit CompleteHabit): ", e);
+    }
+}
+
+export async function addStreakToHabit(id: string, isDone: boolean) {
+    const user = await getCurrentUser()
+    if (!user) {
+        return {failure: "You are not logged in"};
+    }
+    try {
+        const docRef = doc(db, `users/${user.uid}/habits`, id);
+        const docSnap = await getDoc(docRef);
+        if (docSnap.exists()) {
+            await updateDoc(docRef, {
+                streak: isDone ? docSnap.data().streak + 1 : docSnap.data().streak - 1
+            });
+        }
     } catch (e) {
         console.error("Error adding document (habit CompleteHabit): ", e);
     }
