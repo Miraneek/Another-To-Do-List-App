@@ -5,6 +5,7 @@ import React, {useState} from "react";
 import {createHabit} from "@/utils/habits/habitsFunctions";
 import EmojiPicker, {Emoji, EmojiClickData, EmojiStyle, Theme} from "emoji-picker-react";
 import {Loading} from "@/modules/utils/Loading/Loading";
+import {useAuth} from "@/modules/auth/AuthContextProvider";
 
 interface HabitData {
     title: string;
@@ -22,6 +23,8 @@ export function HabitCreate({index}: { index: number }) {
         emoji: '',
     });
     const [isSubmitting, setIsSubmitting] = useState(false);
+
+    const {user} = useAuth()
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
         const {name, value, type} = e.target;
@@ -135,8 +138,8 @@ export function HabitCreate({index}: { index: number }) {
                                 </div>
                                 {error && <p className={"text-red-500 mb-2 text-sm font-semibold"}>{error}</p>}
                                 <div className={"flex gap-2"}>
-                                    <button type="submit" disabled={isSubmitting}
-                                            className="bg-[#e500a4] hover:border-white border-transparent border-2 text-white py-1 px-2 rounded-md transition duration-300 ease-in-out">
+                                    <button type="submit" disabled={isSubmitting || user.email === 'showcase@showcase.cz'}
+                                            className="disabled:bg-gray-400 disabled:cursor-not-allowed bg-[#e500a4] hover:border-white border-transparent border-2 text-white py-1 px-2 rounded-md transition duration-300 ease-in-out">
                                         {isSubmitting ? <Loading/> : 'Create'}
                                     </button>
                                     <Dialog.Close

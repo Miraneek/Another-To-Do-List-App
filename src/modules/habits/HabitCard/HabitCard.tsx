@@ -6,6 +6,7 @@ import {addStreakToHabit, deleteHabit, setCompleationOnHabit} from "@/utils/habi
 import React, {useEffect, useState} from "react";
 import * as AlertDialog from "@radix-ui/react-alert-dialog";
 import {IconTrash} from "@tabler/icons-react";
+import {useAuth} from "@/modules/auth/AuthContextProvider";
 
 interface Habit {
     data: {
@@ -18,9 +19,15 @@ interface Habit {
 export function HabitCard({data, id, index}: Habit) {
 
     const [isDoneToday, setIsDoneToday] = useState(data.isDoneToday);
+    const {user} = useAuth()
 
     useEffect(() => {
-
+        const today = new Date();
+        if (isDoneToday) {
+            if (today.toLocaleDateString() !== data.lastCompleted) {
+                setIsDoneToday(false)
+            }
+        }
     }, [])
 
     const handlClick = () => {
@@ -85,6 +92,7 @@ export function HabitCard({data, id, index}: Habit) {
                                     Cancel
                                 </AlertDialog.Cancel>
                                 <AlertDialog.Action
+                                    disabled={user.email === 'showcase@showcase.cz'}
                                     onClick={handleDelete}
                                     className={"hover:border-white border-transparent border-2 text-white disabled:bg-gray-400 py-2 px-3 bg-[#d90816] rounded-lg transition duration-300 ease-in-out"}
                                 >

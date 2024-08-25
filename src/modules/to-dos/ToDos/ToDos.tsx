@@ -42,7 +42,7 @@ export function ToDos() {
     };
 
     return (
-        <div className={"flex flex-col items-stretch w-11/12 lg:w-3/4 gap-2"}>
+        <div className={"flex flex-col items-stretch w-11/12 lg:w-3/4 gap-4"}>
             {todos.map((card) => (
                 <ToDoCard key={card.id} data={card.data} id={card.id} onDelete={handleDelete}/>
             ))}

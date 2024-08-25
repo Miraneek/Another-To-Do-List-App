@@ -71,7 +71,7 @@ export default function UserSettings() {
                         />
                         <button
                             type={"submit"}
-                            disabled={isSubmittingUsername}
+                            disabled={isSubmittingUsername || user.email === "showcase@showcase.cz"}
                             className={"hover:border-white border-transparent border-2 text-white disabled:bg-gray-400 py-2 px-3 bg-[#e500a4] rounded-lg ml-2 transition duration-300 ease-in-out"}
                         >
                             Change
@@ -92,7 +92,7 @@ export default function UserSettings() {
                         />
                         <button
                             type={"submit"}
-                            disabled={isSubmittingProfilePicture}
+                            disabled={isSubmittingProfilePicture || user.email === "showcase@showcase.cz"}
                             className={"hover:border-white border-transparent border-2 text-white disabled:bg-gray-400 py-2 px-3 bg-[#e500a4] rounded-lg ml-2 transition duration-300 ease-in-out"}
                         >
                             Save
@@ -105,6 +105,7 @@ export default function UserSettings() {
                         <button
                             type={"button"}
                             onClick={handleResetPassword}
+                            disabled={user.email === "showcase@showcase.cz"}
                             className={"hover:border-white border-transparent border-2 text-white disabled:bg-gray-400 py-2 px-3 bg-[#e500a4] rounded-lg transition duration-300 ease-in-out"}
                         >
                             Reset Password
@@ -141,6 +142,7 @@ export default function UserSettings() {
                                             </AlertDialog.Cancel>
                                             <AlertDialog.Action
                                                 onClick={deleteAccount}
+                                                disabled={user.email === "showcase@showcase.cz"}
                                                 className={"hover:border-white border-transparent border-2 text-white disabled:bg-gray-400 py-2 px-3 bg-[#d90816] rounded-lg transition duration-300 ease-in-out"}
                                             >
                                                 Delete Account

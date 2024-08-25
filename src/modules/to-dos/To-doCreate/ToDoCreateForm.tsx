@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {createToDo} from "@/utils/to-do's/to-doFunctions";
 import {Loading} from "@/modules/utils/Loading/Loading";
+import {useAuth} from "@/modules/auth/AuthContextProvider";
 
 interface ToDoData {
     title: string;
@@ -23,6 +24,7 @@ export function ToDoCreateForm({setOpen}: ToDoCreateProps) {
         deadline: undefined,
     });
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const {user} = useAuth();
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
         const {name, value, type} = e.target;
@@ -106,7 +108,7 @@ export function ToDoCreateForm({setOpen}: ToDoCreateProps) {
                 <label className="text-white" htmlFor="isPublic">Public</label>
             </div>
 
-            <button type="submit" disabled={isSubmitting} className="bg-[#e500a4] hover:border-white border-transparent border-2 text-white py-2 px-4 rounded-md">
+            <button type="submit" disabled={isSubmitting || user.email === 'showcase@showcase.cz'} className="disabled:bg-gray-400 disabled:cursor-not-allowed bg-[#e500a4] hover:border-white border-transparent border-2 text-white py-2 px-4 rounded-md">
                 {isSubmitting ? <Loading/> : 'Create'}
             </button>
         </form>
