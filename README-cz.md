@@ -11,6 +11,13 @@ Tohle je moje řešení klasického úkolu vytvoření 📝to do list apliakce, 
 - 🔄 Návyky -> Můžete si vytvořit návyk a pak ho každý den plnit, abyste zvýšili svou sérii.
 - 💾 Data -> Všechna data jsou uložena v databázi Firestore a přístup k nim má pouze uživatel.
 
+## Zkuste mé webové stránky [zde](https://anothertodolistapp.vercel.app)
+
+Můžete si vytvořit vlastní účet nebo použít ukázkový účet, který jsem vytvořil. Ukázkový účet má zakázáno cokoliv měnit, ale pokud si vytvočíte účet vlastní, můžete si vyzkoušet i tvořit a editovat.
+
+- Email: showcase@showcase.cz
+- Password: showcase
+
 ## Tech Stack 💻🛠️
 
 ### Front End </>
