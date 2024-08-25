@@ -2,7 +2,7 @@
 [![en](https://img.shields.io/badge/lang-en-red.svg)](https://github.com/Miraneek/another_to-do_list_app/blob/master/README.md)
 [![cz](https://img.shields.io/badge/lang-cz-blue.svg)](https://github.com/Miraneek/another_to-do_list_app/blob/master/README-cz.md)
 
-This is my take on a basic coding project of making a 📝to do list app, furthermore it has a 🔄habit tracking feature. The app is coded in the ⚛️React framework and uses 🔥Firebase as its back end solution.
+This is my take on a basic coding project of making a 📝to do list app, furthermore my app has a 🔄habit tracking feature. The app is coded in the ⚛️React framework and uses 🔥Firebase as its back end solution.
 
 ## Features 🚀
 
@@ -17,7 +17,7 @@ This is my take on a basic coding project of making a 📝to do list app, furthe
 
 - [React](https://react.dev)
 - [Nextjs](https://nextjs.org)
-- [Vercel](https://vercel.com) (Deploy service)
+- [Vercel](https://vercel.com) (Deploy)
 - [Tailwind](https://tailwindcss.com) (Styling)
 - [Tailwind Merge](https://www.npmjs.com/package/tailwind-merge) (Basic solution for changing tailwind styles based on a state)
 - [Radix UI](https://www.radix-ui.com) (Component library where components can be styled with Tailwind)
@@ -25,6 +25,7 @@ This is my take on a basic coding project of making a 📝to do list app, furthe
 - [Framer Motion](https://www.framer.com/motion/) (Animation library)
 
 ### Back End ⚙️
+
 - [Next Safe Actions](https://next-safe-action.dev) (server side functions)
 - [Firebase Authentication](https://firebase.google.com/docs/auth) (Authentication)
 - [Firebase Firestore](https://firebase.google.com/docs/firestore) (Database)
