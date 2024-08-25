@@ -11,6 +11,13 @@ This is my take on a basic coding project of making a 📝to do list app, furthe
 - 🔄Habits -> You can create a habit and then compleate it every day to up your streak.
 - 💾Data -> All data are stored on a Firestore database and only the user has access to the data.
 
+## Try my website [here](https://anothertodolistapp.vercel.app)
+
+You can create your own account or use a showcase account I created with.
+
+- Email: showcase@showcase.cz
+- Password: showcase
+
 ## Tech Stack 💻🛠️
 
 ### Front End </>
