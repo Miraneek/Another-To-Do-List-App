@@ -13,7 +13,7 @@ This is my take on a basic coding project of making a 📝to do list app, furthe
 
 ## Try my website [here](https://anothertodolistapp.vercel.app)
 
-You can create your own account or use a showcase account I created with.
+You can create your own account or use a showcase account I created with. The showcase account I have create has some function permitted, but if you craete your own account, you can craete and edit all as you like.
 
 - Email: showcase@showcase.cz
 - Password: showcase
