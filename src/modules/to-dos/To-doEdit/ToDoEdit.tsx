@@ -53,7 +53,7 @@ export function ToDoEdit({ data, id, setOpen }: ToDoEditProps) {
 
     return (
         <form onSubmit={handleSubmit}
-              className="border border-white/10 p-6 backdrop-blur-2xl bg-black/20 rounded-xl focus:outline-none">
+              className="border border-white/10 p-6 backdrop-blur-2xl bg-black/60 rounded-xl focus:outline-none">
             <h2 className="text-white text-xl mb-4">Edit Task</h2>
 
             <div className="mb-4">

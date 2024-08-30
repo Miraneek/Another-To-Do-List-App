@@ -89,7 +89,7 @@ export function HabitCreate({index}: { index: number }) {
                         <Dialog.Content
                             className="fixed top-[50%] left-[50%] translate-x-[-50%] lg:w-auto lg:min-w-[400px] w-[90vw] translate-y-[-50%] rounded-xl focus:outline-none">
                             <form onSubmit={handleSubmit}
-                                  className="border border-white/10 p-6 backdrop-blur-2xl bg-black/20 rounded-xl focus:outline-none">
+                                  className="border border-white/10 p-6 backdrop-blur-2xl bg-black/60 rounded-xl focus:outline-none">
                                 <div className="flex flex-col mb-4">
                                     <h2 className="text-white text-xl mb-4">Create Habit</h2>
                                     <div className="mb-4">

@@ -2,7 +2,7 @@
 import {motion} from "framer-motion";
 import {Emoji} from "emoji-picker-react";
 import {twMerge} from "tailwind-merge";
-import {addStreakToHabit, deleteHabit, setCompleationOnHabit} from "@/utils/habits/habitsFunctions";
+import {addStreakToHabit, deleteHabit, resetHabit, setCompleationOnHabit} from "@/utils/habits/habitsFunctions";
 import React, {useEffect, useState} from "react";
 import * as AlertDialog from "@radix-ui/react-alert-dialog";
 import {IconTrash} from "@tabler/icons-react";
@@ -19,26 +19,53 @@ interface Habit {
 export function HabitCard({data, id, index}: Habit) {
 
     const [isDoneToday, setIsDoneToday] = useState(data.isDoneToday);
+    const [streak, setStreak] = useState(0);
     const {user} = useAuth()
 
     useEffect(() => {
         const today = new Date();
+
+        // Handle the case where lastCompleted is null
+        if (!data.lastCompleted) {
+            setIsDoneToday(false);
+            resetHabit(id)
+            return; // Exit early since there's no valid last completed date
+        }
+
+        // Parse the lastCompleted string "30. 8. 2024" into a Date object
+        const [day, month, year] = data.lastCompleted.split('. ').map(Number);
+        const lastCompletedDate = new Date(year, month - 1, day); // JavaScript's months are 0-indexed
+
+        const diffInTime = today.getTime() - lastCompletedDate.getTime();
+        const diffInDays = diffInTime / (1000 * 3600 * 24);
+
         if (isDoneToday) {
-            if (today.toLocaleDateString() !== data.lastCompleted) {
-                setIsDoneToday(false)
+            if (today.toLocaleDateString() !== lastCompletedDate.toLocaleDateString()) {
+                setIsDoneToday(false);
             }
         }
-    }, [])
+
+        // Additional check for streak reset
+        if (diffInDays >= 2) {
+            // More than two days have passed without completing the habit
+            setIsDoneToday(false);
+            setCompleationOnHabit(id, false);
+            resetHabit(id)
+        }
+
+
+
+        setStreak(data.streak);
+    }, [data.lastCompleted, data.streak, id, isDoneToday]);
+
 
     const handlClick = () => {
         if (isDoneToday){
-            setIsDoneToday(false);
-            setCompleationOnHabit(id, false);
-            addStreakToHabit(id, false)
+            setCompleationOnHabit(id, false).then(() => setIsDoneToday(false));
+            addStreakToHabit(id, false).then(r => r ? setStreak(9009) : setStreak(streak - 1));
         } else {
-            setIsDoneToday(true);
-            setCompleationOnHabit(id, true);
-            addStreakToHabit(id, true)
+            setCompleationOnHabit(id, true).then(() => setIsDoneToday(true));
+            addStreakToHabit(id, true).then((r) => r ? setStreak(9009) : setStreak(streak + 1));
         }
     }
 
@@ -105,7 +132,7 @@ export function HabitCard({data, id, index}: Habit) {
             </AlertDialog.Root>
         </div>
         <p className={"text-center text-white font-semibold"}>
-            Streak: <strong className={"text-pink-600 text-lg"}>{isDoneToday ? data.streak + 1 : data.streak}</strong>
+            Streak: <strong className={"text-pink-600 text-lg"}>{streak}</strong>
         </p>
     </motion.div>)
 }
