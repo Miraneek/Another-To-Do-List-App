@@ -5,9 +5,9 @@ import {nothingSchema, registerSchema} from "@/actions/auth/authSchemas";
 import {createUserWithEmailAndPassword, updateProfile, sendEmailVerification} from "firebase/auth";
 import {authCorrect, db} from "@/lib/fireBase/firebase";
 import {cookies} from "next/headers";
-import {collection, doc, setDoc} from "@firebase/firestore";
+import {doc, setDoc} from "@firebase/firestore";
 
-export const registerUserAction = action(registerSchema, async ({username, password, email}) => {
+export const registerUserAction = action(registerSchema, async ({username, password, email, lang}) => {
     try {
         const userCredential = await createUserWithEmailAndPassword(authCorrect, email, password);
         const user = userCredential.user;
@@ -21,6 +21,7 @@ export const registerUserAction = action(registerSchema, async ({username, passw
                 username: username,
                 emailVerified: false, // Flag to indicate email verification status
                 friends: [],
+                language: lang
             });
             console.log("Document written with ID: " + user.uid);
 

@@ -6,6 +6,7 @@ import {createHabit} from "@/utils/habits/habitsFunctions";
 import EmojiPicker, {Emoji, EmojiClickData, EmojiStyle, Theme} from "emoji-picker-react";
 import {Loading} from "@/modules/utils/Loading/Loading";
 import {useAuth} from "@/modules/auth/AuthContextProvider";
+import {useTranslations} from "use-intl";
 
 interface HabitData {
     title: string;
@@ -23,6 +24,8 @@ export function HabitCreate({index}: { index: number }) {
         emoji: '',
     });
     const [isSubmitting, setIsSubmitting] = useState(false);
+
+    const t = useTranslations("home.habits.create")
 
     const {user} = useAuth()
 
@@ -49,7 +52,7 @@ export function HabitCreate({index}: { index: number }) {
             return;
         }
         if (!formData.title) {
-            setError('Please add a title to your habit');
+            setError(t("name_error"));
             return;
         }
         setIsSubmitting(true);
@@ -91,9 +94,9 @@ export function HabitCreate({index}: { index: number }) {
                             <form onSubmit={handleSubmit}
                                   className="border border-white/10 p-6 backdrop-blur-2xl bg-black/60 rounded-xl focus:outline-none">
                                 <div className="flex flex-col mb-4">
-                                    <h2 className="text-white text-xl mb-4">Create Habit</h2>
+                                    <h2 className="text-white text-xl mb-4">{t("title")}</h2>
                                     <div className="mb-4">
-                                        <label className="block text-white mb-2" htmlFor="title">Title</label>
+                                        <label className="block text-white mb-2" htmlFor="title">{t("name")}</label>
                                         <input
                                             type="text"
                                             id="title"
@@ -104,14 +107,13 @@ export function HabitCreate({index}: { index: number }) {
                                         />
                                     </div>
                                     <div>
-                                        <h2 className="text-white text-xl mb-4">Emoji:</h2>
                                         {formData.emoji ?
                                             <button onClick={() => setEmojiPickerOpen(true)}>
                                                 <Emoji unified={formData.emoji ? formData.emoji : "1f600"}
                                                        emojiStyle={EmojiStyle.APPLE} size={70}/>
                                             </button>
                                             : <button onClick={() => setEmojiPickerOpen(true)}
-                                                      className="text-white text-xl mb-4">Select emoji</button>
+                                                      className="text-white text-xl mb-4">{t("emoji")}</button>
                                         }
                                         <Dialog.Root open={emojiPickerOpen} onOpenChange={setEmojiPickerOpen}>
                                             <Dialog.Portal>
@@ -140,12 +142,12 @@ export function HabitCreate({index}: { index: number }) {
                                 <div className={"flex gap-2"}>
                                     <button type="submit" disabled={isSubmitting || user.email === 'showcase@showcase.cz'}
                                             className="disabled:bg-gray-400 disabled:cursor-not-allowed bg-[#e500a4] hover:border-white border-transparent border-2 text-white py-1 px-2 rounded-md transition duration-300 ease-in-out">
-                                        {isSubmitting ? <Loading/> : 'Create'}
+                                        {isSubmitting ? <Loading/> : t("submit")}
                                     </button>
                                     <Dialog.Close
                                         className={"hover:border-white/60 border-transparent border-2 text-white disabled:bg-gray-400 py-1 px-2 bg-white/10 rounded-lg transition duration-300 ease-in-out"}
                                     >
-                                        Close
+                                        {t("cancel")}
                                     </Dialog.Close>
                                 </div>
                             </form>
@@ -154,6 +156,6 @@ export function HabitCreate({index}: { index: number }) {
                 </Dialog.Portal>
             </Dialog.Root>
         </div>
-        <p className={"text-center text-white font-semibold text-xl mt-3 capitalize"}>Create Habit</p>
+        <p className={"text-center text-white font-semibold text-xl mt-3 capitalize"}>{t("title")}</p>
     </motion.div>
 }

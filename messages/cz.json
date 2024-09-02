@@ -1,0 +1,124 @@
+{
+  "auth": {
+    "login": {
+      "title": "Přihlášení",
+      "email": {
+        "label": "Email",
+        "placeholder": "Napiěte svou emailovou adresu",
+        "error": "Zadajte platnou emailovou adresu"
+      },
+      "password": {
+        "label": "Heslo",
+        "placeholder": "Napište své heslo",
+        "error": "Heslo musí být dlouhé alespoň 8 znaků"
+      },
+      "dont_have_account": "Nemáte účet?",
+      "create_one": "Založte si nový",
+      "errors": {
+        "user_not_found": "Uživatel nenalezen",
+        "invalid_credentials": "Špatné přihlašovací údaje",
+        "network": "Problém se sítí. Zkuste to prosím znovu později.",
+        "too_many_requests": "Mnohé přihlášování. Zkuste to prosím znovu později."
+      },
+      "submit": "Přihlášit se"
+    },
+    "register": {
+      "title": "Registrace",
+      "username": {
+        "label": "Uživatelské jméno",
+        "placeholder": "Napište své uživatelské jméno",
+        "error": "Uživatelské jméno musí být dlouhé alespoň 3 znaky"
+      },
+      "email": {
+        "label": "Email",
+        "placeholder": "Napište svou emailovou adresu",
+        "error": "Zadajte platnou emailovou adresu"
+      },
+      "password": {
+        "label": "Heslo",
+        "placeholder": "Napište své heslo",
+        "error": "Heslo musí být dlouhé alespoň 8 znaků"
+      },
+      "confirm_password": {
+        "label": "Potvrdit heslo",
+        "placeholder": "Napište své heslo znovu",
+        "error": "Hesla se neshodují"
+      },
+      "errors": {
+        "user_already_exists": "Uživatel jiz existuje",
+        "network": "Problém se sítí. Zkuste to prosím znovu později."
+      },
+      "submit": "Založit účet",
+      "already_have_account": "Jiz maže účet?",
+      "login": "Přihlášit se"
+    }
+  },
+  "nav": {
+    "home": "Domovská stránka",
+    "user_settings": "Nastavení profilu",
+    "logout": "Odlásit se"
+  },
+  "home": {
+    "habits": {
+      "title": "Vaše návyky",
+      "create": {
+        "title": "Vytvořit návyk",
+        "name": "Název návyku",
+        "name_error": "Prosím přidejte návyku název",
+        "emoji": "Vyberte emotikon",
+        "submit": "Vytvořit návyk",
+        "cancel": "Zrušit"
+      },
+      "card": {
+        "delete": "Vymazat návyk",
+        "delete_warning": "Opravdu chcete vymazat návyk? Tato akce nejde vrátit.",
+        "cancel": "Zrušit",
+        "submit": "Vymazat návyk"
+      }
+    },
+    "todos": {
+      "title": "Vaše úkoly",
+      "create_todo": "Vytvořit úkol",
+      "no_todos": "Nemáte žádné úkoly, vytvořte si je kliknutím na tlacítko Vytvořit úkol",
+      "card": {
+        "view": "Zobrazit",
+        "edit": "Upravit",
+        "delete": "Vymazat",
+        "public": "Veřejné",
+        "private": "Soukromé",
+        "is_public": "Viditelnost",
+        "close": "Zavřít",
+        "priority": {
+          "label": "Priorita",
+          "low": "Malá",
+          "medium": "Střední",
+          "high": "Vysoká"
+        },
+        "edit_todo": "Upravit úkol",
+        "title": "Název",
+        "description": "Popis",
+        "save": "Uložit",
+        "create_todo": "Vytvořit úkol",
+        "create": "Vytvořit"
+      }
+    }
+  },
+  "user_settings": {
+    "title": "Nastavení profilu",
+    "username": {
+      "label": "Uživatelské jméno",
+      "placeholder": "Napište své uživatelské jméno",
+      "submit": "Zmenit"
+    },
+    "switch_lang": "Změnit jazyk",
+    "picture": {
+      "label": "Profilový obrázek",
+      "submit": "Změnit",
+      "placeholder": "Vložte url adresu profilového obrázku"
+    },
+    "password_reset": "Změnit heslo",
+    "delete_account": "Vymazat účet",
+    "delete_account_warning": "Opravdu chcete vymazat svů účet? Tato akce nelze vrátit.",
+    "cancel": "Zrušit"
+  }
+}

@@ -1,4 +1,3 @@
-"use client"
 import React from 'react';
 import * as Checkbox from '@radix-ui/react-checkbox';
 import * as Dialog from '@radix-ui/react-dialog'
@@ -9,6 +8,7 @@ import {completeToDo, deleteToDo, unCompleteToDo} from "@/utils/to-do's/to-doFun
 import {Loading} from "@/modules/utils/Loading/Loading";
 import {TodoCloseView} from "@/modules/to-dos/TodoCloseView/TodoCloseView";
 import {twMerge} from 'tailwind-merge'
+import {useTranslations} from "use-intl";
 
 interface ToDo {
     data: {
@@ -29,6 +29,8 @@ export function ToDoCard({data, id, onDelete}: ToDo) {
     const [openEdit, setOpenEdit] = React.useState(false);
     const [isCompleting, setIsCompleting] = React.useState(false);
     const [isDone, setIsDone] = React.useState(data.isDone)
+
+    const t = useTranslations("home.todos.card");
 
     const priorityColors: { [key: string]: string } = {
         low: 'bg-green-500',
@@ -82,7 +84,9 @@ export function ToDoCard({data, id, onDelete}: ToDo) {
                         )}
                     </div>
                     <div className={`rounded-full text-xs py-0.5 px-1.5 ${priorityColors[data.priority]}`}>
-                        {data.priority}
+                        {
+                            data.priority === "low" ? t("priority.low") : data.priority === "medium" ? t("priority.medium") : t("priority.high")
+                        }
                     </div>
                 </button>
                 <div className={"flex items-center gap-2"}>
@@ -103,19 +107,19 @@ export function ToDoCard({data, id, onDelete}: ToDo) {
                                 <DropdownMenu.Item
                                     className="flex text-sm outline-none hover:bg-white/10 items-center gap-2 py-1 px-2">
                                     <button onClick={() => setOpenCloseView(true)}
-                                            className={"text-center w-full"}>View
+                                            className={"text-center w-full"}>{t("view")}
                                     </button>
                                 </DropdownMenu.Item>
                                 <DropdownMenu.Item
                                     className="flex text-sm outline-none hover:bg-white/10 items-center gap-2 py-1 px-2">
                                     <button onClick={() => setOpenEdit(true)} className={"text-center w-full"}>
-                                        Edit
+                                        {t("edit")}
                                     </button>
                                 </DropdownMenu.Item>
                                 <DropdownMenu.Item
                                     className="flex text-sm outline-none hover:bg-red-800/40 items-center gap-2 py-1 px-2 bg-red-800/20 text-red-400">
                                     <button onClick={handleDelete} className={"text-center w-full"}>
-                                        Delete
+                                        {t("delete")}
                                     </button>
                                 </DropdownMenu.Item>
                             </DropdownMenu.Content>

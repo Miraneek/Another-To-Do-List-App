@@ -5,12 +5,15 @@ import {useAuth} from "@/modules/auth/AuthContextProvider";
 import {motion} from "framer-motion"
 import {useEffect, useState} from "react";
 import {Divide as Hamburger} from 'hamburger-react'
+import {useTranslations} from "use-intl";
 
 export function NavBar() {
 
     const [open, setOpen] = useState(false)
     const [isMobile, setIsMobile] = useState(false)
     const {user, logOut} = useAuth()
+
+    const t = useTranslations("nav")
 
     useEffect(
         () => {
@@ -60,23 +63,23 @@ export function NavBar() {
                 <ul className={"flex flex-col text-white/80 font-bold text-md w-full"}>
                     <li className={"w-full hover:bg-[rgba(28,28,33,0.2)] transition-all duration-100 border-t-2 hover:border-[rgba(255,255,255,0.006)] border-transparent border-b-2"}>
                         <Link href={"/"}
-                              className={"hover:text-white/80 cursor-pointer w-full h-full py-4 pl-8 block transition-all duration-100"}>
+                              className={"hover:text-white/80 cursor-pointer w-full h-full py-4 pl-4 block transition-all duration-100"}>
                             <strong className={"text-2xl mr-2"}>🏡</strong>
-                            Home
+                            {t("home")}
                         </Link>
                     </li>
                     <li className={"w-full hover:bg-[rgba(28,28,33,0.2)] transition-all duration-100 border-t-2 hover:border-[rgba(255,255,255,0.006)] border-transparent border-b-2"}>
                         <Link href={"/user-settings"}
-                              className={"hover:text-white/80 cursor-pointer w-full h-full py-4 pl-8 block transition-all duration-100"}>
+                              className={"hover:text-white/80 cursor-pointer w-full h-full py-4 pl-4 block transition-all duration-100"}>
                             <strong className={"text-2xl mr-2"}>✏️</strong>
-                            User settings
+                            {t("user_settings")}
                         </Link>
                     </li>
                     <li className={"w-full hover:bg-[rgba(28,28,33,0.2)] transition-all duration-100 border-t-2 hover:border-[rgba(255,255,255,0.006)] border-transparent border-b-2"}>
                         <Link href={"/login"} onClick={logout}
-                              className={"hover:text-white/80 cursor-pointer w-full h-full py-4 pl-8 block transition-all duration-100"}>
+                              className={"hover:text-white/80 cursor-pointer w-full h-full py-4 pl-4 block transition-all duration-100"}>
                             <strong className={"text-2xl mr-2"}>👋</strong>
-                            Log out
+                            {t("logout")}
                         </Link>
                     </li>
                 </ul>

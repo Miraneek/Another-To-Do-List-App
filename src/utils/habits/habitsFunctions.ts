@@ -19,6 +19,13 @@ interface Habit {
     id: string;
 }
 
+/*
+I know that all of these function can the client call whenever and change their data.
+That can be a problem in the streak for example where the user can cheat their streak and add how much they want.
+In this situation it doesn't meter since it's not a big deal. But if it were something more significant than a to do list app
+ I would make it a serverside function and check if it's a legit call to increase the streak on the backend
+*/
+
 export async function createHabit({title, emoji}: createHabit) {
 
     const user = await getCurrentUser()

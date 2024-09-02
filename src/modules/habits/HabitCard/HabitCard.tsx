@@ -7,6 +7,7 @@ import React, {useEffect, useState} from "react";
 import * as AlertDialog from "@radix-ui/react-alert-dialog";
 import {IconTrash} from "@tabler/icons-react";
 import {useAuth} from "@/modules/auth/AuthContextProvider";
+import {useTranslations} from "use-intl";
 
 interface Habit {
     data: {
@@ -21,6 +22,8 @@ export function HabitCard({data, id, index}: Habit) {
     const [isDoneToday, setIsDoneToday] = useState(data.isDoneToday);
     const [streak, setStreak] = useState(0);
     const {user} = useAuth()
+
+    const t = useTranslations("home.habits.card")
 
     useEffect(() => {
         const today = new Date();
@@ -52,25 +55,36 @@ export function HabitCard({data, id, index}: Habit) {
             setCompleationOnHabit(id, false);
             resetHabit(id)
         }
-
-
-
         setStreak(data.streak);
-    }, [data.lastCompleted, data.streak, id, isDoneToday]);
+    },[]);
+
+    const [cooldown, setCooldown] = useState(false);
 
 
-    const handlClick = () => {
-        if (isDoneToday){
-            setCompleationOnHabit(id, false).then(() => setIsDoneToday(false));
+    const handleClick = () => {
+        if (cooldown) return; // Prevent further clicks if cooldown is active
+
+        setCooldown(true); // Activate cooldown
+
+        if (isDoneToday) {
+            setCompleationOnHabit(id, false);
+            setIsDoneToday(false);
             addStreakToHabit(id, false).then(r => r ? setStreak(9009) : setStreak(streak - 1));
         } else {
-            setCompleationOnHabit(id, true).then(() => setIsDoneToday(true));
-            addStreakToHabit(id, true).then((r) => r ? setStreak(9009) : setStreak(streak + 1));
+            console.log("done");
+            setCompleationOnHabit(id, true);
+            setIsDoneToday(true);
+            addStreakToHabit(id, true).then(r => r ? setStreak(9009) : setStreak(streak + 1));
         }
-    }
+
+        setTimeout(() => {
+            setCooldown(false); // Deactivate cooldown after 1 second
+        }, 1000); // Set cooldown duration (1000ms = 1 second)
+    };
+
 
     const handleDelete = () => {
-        deleteHabit(id).then(r => console.log(r));
+        deleteHabit(id).then(r => window.location.reload());
     }
 
     return (<motion.div
@@ -81,8 +95,8 @@ export function HabitCard({data, id, index}: Habit) {
         key={data.title}
     >
         <button
-            onClick={handlClick}
-            className={twMerge("w-10/12 mx-auto aspect-square relative rounded-full bg-white/10 hover:bg-white/20 transition-all duration-300 ease-in-out text-3xl sm:text-5xl border-white border-2 shadow-white shadow-md flex-wrap", isDoneToday && "shadow-green-300 border-green-300 bg-green-300/20 hover:bg-green-300/30")}>
+            onClick={handleClick}
+            className={twMerge("w-10/12 mx-auto aspect-square relative rounded-full bg-white/10 hover:bg-white/20 transition-all duration-300 ease-in-out text-3xl sm:text-5xl border-white border-2 shadow-white shadow-md flex-wrap", isDoneToday ? "shadow-green-300 border-green-300 bg-green-300/20 hover:bg-green-300/30" : "")}>
                 <span
                     className={"absolute h-full w-full flex items-center justify-center top-[50%] left-1/2 -translate-x-1/2 -translate-y-1/2"}>
                         <Emoji unified={data.emoji} size={50}/>
@@ -106,25 +120,25 @@ export function HabitCard({data, id, index}: Habit) {
                             className={"border border-white/10 p-6 backdrop-blur-xl bg-black/0 rounded-xl focus:outline-none"}
                         >
                             <AlertDialog.Title className={"text-white text-2xl font-semibold"}>
-                                ❌Delete Habit❌
+                                ❌{t("delete")}❌
                             </AlertDialog.Title>
                             <AlertDialog.Description
                                 className={"text-white/70 mt-2 text-lg mb-4 font-semibold"}>
-                                Are you sure you want to delete your habit? This action cannot be undone.
+                                {t("delete_warning")}
                             </AlertDialog.Description>
                             <div className={"flex gap-4"}>
-                                <AlertDialog.Cancel
-                                    className={"hover:border-white/60 border-transparent border-2 text-white disabled:bg-gray-400 py-2 px-3 bg-white/10 rounded-lg transition duration-300 ease-in-out"}
-                                >
-                                    Cancel
-                                </AlertDialog.Cancel>
                                 <AlertDialog.Action
                                     disabled={user.email === 'showcase@showcase.cz'}
                                     onClick={handleDelete}
                                     className={"hover:border-white border-transparent border-2 text-white disabled:bg-gray-400 py-2 px-3 bg-[#d90816] rounded-lg transition duration-300 ease-in-out"}
                                 >
-                                    Delete Habit
+                                    {t("submit")}
                                 </AlertDialog.Action>
+                                <AlertDialog.Cancel
+                                    className={"hover:border-white/60 border-transparent border-2 text-white disabled:bg-gray-400 py-2 px-3 bg-white/10 rounded-lg transition duration-300 ease-in-out"}
+                                >
+                                    {t("cancel")}
+                                </AlertDialog.Cancel>
                             </div>
                         </motion.div>
                     </AlertDialog.Content>

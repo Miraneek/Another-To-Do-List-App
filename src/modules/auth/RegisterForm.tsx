@@ -4,12 +4,17 @@ import {registerUserAction} from "@/actions/auth/authActions";
 import {useAction} from "next-safe-action/hooks";
 import Link from "next/link";
 import {useAuth} from "@/modules/auth/AuthContextProvider";
+import LangSwitcher from "@/modules/utils/LangSwitcher/LangSwitcher";
+import {useTranslations} from "use-intl";
+import {router} from "next/client";
+import {getUserLocale} from "@/lib/next-intl/locale";
 
 export function RegisterFrom() {
     const [email, setEmail] = useState('');
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
+    const [lang, setLang] = useState(getUserLocale().toString());
     const [errors, setErrors] = useState({
         email: '',
         username: '',
@@ -18,6 +23,8 @@ export function RegisterFrom() {
         mainError: '',
     });
     const [isSubmitting, setIsSubmitting] = useState(false);
+
+    const t = useTranslations("auth.register")
 
     const {logIn} = useAuth();
 
@@ -29,6 +36,7 @@ export function RegisterFrom() {
             } else if (data.success) {
                 try {
                     await logIn(data.success.email, data.success.password)
+                    router.push('/');
                 } catch (error) {
                 }
             }
@@ -52,16 +60,16 @@ export function RegisterFrom() {
         let error = '';
         switch (field) {
             case 'email':
-                if (!validateEmail(email)) error = 'Invalid email address';
+                if (!validateEmail(email)) error = t('email.error');
                 break;
             case 'username':
-                if (username.length < 3) error = 'Username must be at least 3 characters long';
+                if (username.length < 3) error = t('username.error');
                 break;
             case 'password':
-                if (!validatePassword(password)) error = 'Password must be at least 8 characters long';
+                if (!validatePassword(password)) error = t("password.error");
                 break;
             case 'confirmPassword':
-                if (confirmPassword !== password) error = 'Passwords do not match';
+                if (confirmPassword !== password) error = t("confirm_password.error");
                 break;
             default:
                 break;
@@ -91,16 +99,16 @@ export function RegisterFrom() {
         setErrors({...errors, mainError: ''});
         setIsSubmitting(true);
         if (validateForm()) {
-            execute({username, password, email});
+            execute({username, password, email, lang});
         }
     };
 
     return (
         <div>
             <form onSubmit={handleSubmit} className="lg:w-96 w-11/12 text-black">
-                <h2 className={"text-white text-3xl mb-4 font-bold mt-20"}>Register</h2>
+                <h2 className={"text-white text-3xl mb-4 font-bold mt-20"}>{t("title")}</h2>
                 <div className="mb-4">
-                    <label htmlFor="email" className="block text-white mb-2 text-xl font-semibold">Email</label>
+                    <label htmlFor="email" className="block text-white mb-2 text-xl font-semibold">{t("email.label")}</label>
                     <input
                         type="email"
                         id="email"
@@ -113,7 +121,7 @@ export function RegisterFrom() {
                     {errors.email && <p className="text-red-500 text-sm mt-1 ml-1 font-semibold">{errors.email}</p>}
                 </div>
                 <div className="mb-4">
-                    <label htmlFor="username" className="block text-white mb-2 text-xl font-semibold">Username</label>
+                    <label htmlFor="username" className="block text-white mb-2 text-xl font-semibold">{t("username.label")}</label>
                     <input
                         type="text"
                         id="username"
@@ -127,7 +135,7 @@ export function RegisterFrom() {
                         <p className="text-red-500 text-sm mt-1 ml-1 font-semibold">{errors.username}</p>}
                 </div>
                 <div className="mb-4">
-                    <label htmlFor="password" className="block text-white mb-2 text-xl font-semibold">Password</label>
+                    <label htmlFor="password" className="block text-white mb-2 text-xl font-semibold">{t("password.label")}</label>
                     <input
                         type="password"
                         id="password"
@@ -141,8 +149,9 @@ export function RegisterFrom() {
                         <p className="text-red-500 text-sm mt-1 ml-1 font-semibold">{errors.password}</p>}
                 </div>
                 <div className="mb-4">
-                    <label htmlFor="confirmPassword" className="block text-white mb-2 text-xl font-semibold">Confirm
-                        Password</label>
+                    <label htmlFor="confirmPassword" className="block text-white mb-2 text-xl font-semibold">
+                        {t("confirm_password.label")}
+                    </label>
                     <input
                         type="password"
                         id="confirmPassword"
@@ -152,22 +161,24 @@ export function RegisterFrom() {
                         placeholder={"Confirm your password"}
                         className={`w-full p-2 border-2 border-white/20 bg-black/20 rounded-lg text-white placeholder-gray-400 ${errors.confirmPassword ? 'border-red-500' : 'border-gray-300'}`}
                     />
-                    {errors.confirmPassword && <p className="text-red-500 text-sm">{errors.confirmPassword}</p>}
+                    {errors.confirmPassword && <p className="text-red-500 text-sm mt-1 ml-1 font-semibold">{errors.confirmPassword}</p>}
                 </div>
+                <LangSwitcher setLocale={setLang}/>
                 <button type={"submit"}
                         className={"disabled:cursor-not-allowed w-full disabled:opacity-50 hover:border-white border-transparent border-2 text-white disabled:bg-gray-400 py-2 px-3 bg-[#e500a4] rounded-lg transition duration-300 ease-in-out"}
                         disabled={isSubmitting}>
-                        Register
+                    {t("submit")}
                 </button>
-                {isSubmitting && <p className={"text-[#e500a4] text-sm mt-1 ml-1 font-semibold"}>Check your email for verification.</p>}
+                {isSubmitting && <p className={"text-[#e500a4] text-sm mt-1 ml-1 font-semibold"}>Check your email for
+                    verification.</p>}
                 {errors.mainError && <p className="text-red-500 text-sm mt-1 ml-1 font-semibold">{errors.mainError}</p>}
             </form>
             <div className={"mt-4 text-center text-white font-semibold flex flex-col items-center"}>
                 <span>
-                    Already have an account?
+                    {t("already_have_account")}
                 </span>
                 <Link href={"/login"}
-                      className={"ml-2 text-blue-400 hover:text-blue-500 transition duration-300 ease-in-out text-semibold"}>Login</Link>
+                      className={"text-blue-400 hover:text-blue-500 transition duration-300 ease-in-out text-semibold"}>{t("login")}</Link>
             </div>
         </div>
 

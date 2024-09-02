@@ -5,6 +5,8 @@ import {AuthContextProvider} from "@/modules/auth/AuthContextProvider";
 import React from "react";
 import {NavBar} from "@/modules/nav/NavBar";
 import Background from "@/modules/utils/Background/Background";
+import {getLocale, getMessages} from "next-intl/server";
+import {NextIntlClientProvider} from "next-intl";
 
 const inter = Inter({subsets: ["latin"]});
 
@@ -13,10 +15,16 @@ export const metadata: Metadata = {
     description: "Another To-Do list app but with special features and more complex codebase",
 };
 
-export default function RootLayout({children,}: Readonly<{ children: React.ReactNode; }>) {
+export default async function RootLayout({children,}: Readonly<{ children: React.ReactNode; }>) {
+
+    const locale = await getLocale();
+
+    // Providing all messages to the client
+    // side is the easiest way to get started
+    const messages = await getMessages();
 
     return (
-        <html lang="en">
+        <html lang={locale}>
         <head>
             <title>Just Another To-do List App</title>
             <meta name="title" content="Just Another To-do List App"/>
@@ -39,7 +47,8 @@ export default function RootLayout({children,}: Readonly<{ children: React.React
                   content="https://www.gstatic.com/android/keyboard/emojikitchen/20231113/u1f4da/u1f4da_u1f431.png?fbx"/>
         </head>
         <body className={"bg-[#1C1C21] text-white"}>
-        <AuthContextProvider>
+        <NextIntlClientProvider messages={messages}>
+            <AuthContextProvider>
                 <Background>
                     <div className={"flex"}>
                         <NavBar/>
@@ -48,7 +57,8 @@ export default function RootLayout({children,}: Readonly<{ children: React.React
                         </div>
                     </div>
                 </Background>
-        </AuthContextProvider>
+            </AuthContextProvider>
+        </NextIntlClientProvider>
         </body>
         </html>
     )

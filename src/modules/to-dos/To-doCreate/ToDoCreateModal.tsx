@@ -2,16 +2,19 @@
 import * as Dialog from '@radix-ui/react-dialog';
 import React from "react";
 import {ToDoCreateForm} from "@/modules/to-dos/To-doCreate/ToDoCreateForm";
+import {useTranslations} from "use-intl";
 
 export function ToDoCreateModal() {
 
     const [open, setOpen] = React.useState(false);
 
+    const t = useTranslations("home.todos.card");
+
     return (
         <Dialog.Root open={open} onOpenChange={setOpen}>
             <Dialog.Trigger
                 className={"hover:border-white border-transparent border-2 text-white disabled:bg-gray-400 py-2 px-3 bg-[#e500a4] rounded-lg transition duration-300 ease-in-out"}>
-                Create new to-do
+                {t("create_todo")}
             </Dialog.Trigger>
             <Dialog.Portal>
                 <Dialog.Overlay

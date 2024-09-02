@@ -25,6 +25,7 @@
     "framer-motion": "^11.3.21",
     "hamburger-react": "^2.5.1",
     "next": "14.2.3",
+    "next-intl": "^3.19.0",
     "next-safe-action": "^6.2.0",
     "react": "^18",
     "react-dom": "^18",
