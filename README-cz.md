@@ -16,7 +16,7 @@ Tohle je moje řešení klasického úkolu vytvoření 📝to do list apliakce, 
 Můžete si vytvořit vlastní účet nebo použít ukázkový účet, který jsem vytvořil. Ukázkový účet má zakázáno cokoliv měnit, ale pokud si vytvočíte účet vlastní, můžete si vyzkoušet i tvořit a editovat.
 
 - Email: showcase@showcase.cz
-- Password: showcase
+- heslo: showcase
 
 ## Tech Stack 💻🛠️
 
